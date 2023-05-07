@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container h1, p, small {
+    text-align: center;
+}
+
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 25px;
+}
+
+.sign-up {
+    background-color: rgb(46, 192, 46);
+    border-color: rgb(46, 192, 46);
+}
+
+.sign-up:hover {
+    background-color: rgb(61, 177, 61);
+}
+
+.btn-close:focus {
+    box-shadow: none;
+}
