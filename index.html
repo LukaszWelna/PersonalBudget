@@ -15,72 +15,91 @@
 
 <body>
 
-    <div class="container col-xl-10 col-xxl-8 px-4 py-5">
-        <div class="row align-items-center g-lg-5 py-5">
-            <div class="col-lg-7 text-center text-lg-start">
-                <img class="logo" src="images/logo.png" width="80%">
-                <p class="col-lg-12 fs-4">This application allows to create own financial spreadsheet in a simple way. 
-                    Creating a personal budget is the key to gaining control of your money.</p>
-            </div>
-            <div class="col-md-10 mx-auto col-lg-5">
-                <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingEmailSignIn" placeholder="name@example.com">
-                        <label for="floatingEmailSignIn">Email address</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="floatingPasswordSignIn" placeholder="Password">
-                        <label for="floatingPasswordSignIn">Password</label>
-                    </div>
-                    <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Sign in</button>
-                    <hr class="my-4">
-                    <button class="w-100 btn btn-lg btn-primary sign-up" type="button" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">Sign up</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Sign up</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <main>
+        <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+            <div class="row align-items-center g-lg-5 py-5">
+                <div class="col-lg-7 text-center text-lg-start">
+                    <article>
+                        <header>
+                            <img class="logo" src="images/logo.png" width="80%">
+                            <p class="col-lg-12 fs-4">This application allows to create own financial spreadsheet in a
+                                simple
+                                way.
+                                Creating a personal budget is the key to gaining control of your money.</p>
+                        </header>
+                    </article>
                 </div>
-                <div class="modal-body">
-                    <div class="col-md-10 mx-auto col-lg-10">
+                <div class="col-md-10 mx-auto col-lg-5">
+                    <article>
                         <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingFirstNameSignUp" placeholder="First name">
-                                <label for="floatingFirstNameSignUp">First name</label>
+                                <input type="email" class="form-control" id="floatingEmailSignIn"
+                                    placeholder="name@example.com">
+                                <label for="floatingEmailSignIn">Email address</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingLastNameSignUp" placeholder="Last name">
-                                <label for="floatingFirstNameSignUp">Last name</label>
+                                <input type="password" class="form-control" id="floatingPasswordSignIn"
+                                    placeholder="Password">
+                                <label for="floatingPasswordSignIn">Password</label>
                             </div>
-                            <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingEmailSignUp" placeholder="name@example.com">
-                                <label for="floatingEmailSignUp">Email address</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="floatingPasswordSignUp" placeholder="Password">
-                                <label for="floatingPasswordSignUp">Password</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="floatingRepeatPasswordSignUp" placeholder="Password">
-                                <label for="floatingRepeatPasswordSignUp">Repeat password</label>
-                            </div>
-                            <button class="w-100 btn btn-lg btn-primary mt-3 sign-up" type="button">Sign up</button>
+                            <a href="home.html" class="w-100 btn btn-lg btn-primary mt-3" role="button" type="submit">Sign in</a>
+                            <hr class="my-4">
+                            <button class="w-100 btn btn-lg btn-primary sign-up" type="button" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">Sign up</button>
                         </form>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <!-- Modal -->
+    <article>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Sign up</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-10 mx-auto col-lg-10">
+                            <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingFirstNameSignUp"
+                                        placeholder="First name">
+                                    <label for="floatingFirstNameSignUp">First name</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingLastNameSignUp"
+                                        placeholder="Last name">
+                                    <label for="floatingFirstNameSignUp">Last name</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="floatingEmailSignUp"
+                                        placeholder="name@example.com">
+                                    <label for="floatingEmailSignUp">Email address</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="password" class="form-control" id="floatingPasswordSignUp"
+                                        placeholder="Password">
+                                    <label for="floatingPasswordSignUp">Password</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="password" class="form-control" id="floatingRepeatPasswordSignUp"
+                                        placeholder="Password">
+                                    <label for="floatingRepeatPasswordSignUp">Repeat password</label>
+                                </div>
+                                <button class="w-100 btn btn-lg btn-primary mt-3 sign-up" type="button">Sign up</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    </article>
 
 </body>
 

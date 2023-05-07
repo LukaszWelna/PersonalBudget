@@ -26,3 +26,12 @@ body {
 .btn-close:focus {
     box-shadow: none;
 }
+
+.logo-navbar {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-collapse {
+    min-width: 770px;
+}
