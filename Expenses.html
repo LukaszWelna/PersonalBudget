@@ -25,7 +25,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="navbar-collapse collapse" id="navbarsExample09" style="">
+                <div class="navbar-collapse collapse" id="navbarsExample09">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="home.html"><i class="bi bi-house-door"></i> Home</a>
@@ -56,7 +56,61 @@
 
     <main>
         <article>
-           
+            <div class="col-md-10 mx-auto col-lg-4 mt-5">
+                <article>
+                    <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="expenseAmount"
+                                placeholder="Income amount" step="0.01" min="0">
+                            <label for="incomeAmount">Amount</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="date" class="form-control" id="expenseDate"
+                                placeholder="Date" min="1970-01-01">
+                            <label for="incomeDate">Date</label>
+                        </div>
+                        <div class="form-floating">
+                            <select class="form-select form-select-md mb-3" id="expensePayment" aria-label="choose payment method">
+                                <option selected>Choose option</option>
+                                <option value="1">Cash</option>
+                                <option value="2">Debit card</option>
+                                <option value="3">Credit card</option>
+                              </select>
+                              <label for="incomeSource">Payment</label>
+                        </div>
+                        <div class="form-floating">
+                            <select class="form-select form-select-md mb-3" id="expenseSource" aria-label="choose expense source">
+                                <option selected>Choose option</option>
+                                <option value="1">Food</option>
+                                <option value="2">Apartment</option>
+                                <option value="3">Transport</option>
+                                <option value="4">Telecommunication</option>
+                                <option value="5">Health care</option>
+                                <option value="6">Clothes</option>
+                                <option value="7">Hygiene</option>
+                                <option value="8">Kids</option>
+                                <option value="9">Entertainment</option>
+                                <option value="10">Trip</option>
+                                <option value="11">Training</option>
+                                <option value="12">Books</option>
+                                <option value="13">Savings</option>
+                                <option value="14">Pension</option>
+                                <option value="15">Debt repayment</option>
+                                <option value="16">Donation</option>
+                                <option value="17">Other</option>
+                              </select>
+                              <label for="expenseSource">Source</label>
+                        </div>
+                          <div class="form-floating mb-3">
+                            <textarea class="form-control" id="expenseComment" placeholder="Comment" maxlength="50"></textarea>
+                            <label for="incomeComment">Comment</label>
+                          </div>
+                        <hr class="my-4">
+                        <a href="#" class="w-100 btn btn-lg btn-primary mb-4" role="button" type="submit">Apply</a>
+                        <a href="#" class="w-100 btn btn-lg btn-danger" role="button" type="submit">Cancel</a>
+                    </form>
+                </article>
+            </div>
         </article>
     </main>
 </body>
