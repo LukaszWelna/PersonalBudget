@@ -28,17 +28,19 @@
                 <div class="navbar-collapse collapse" id="navbarsExample09" style="">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="home.html"><i
-                                    class="bi bi-house-door"></i> Home</a>
+                            <a class="nav-link" aria-current="page" href="home.html"><i class="bi bi-house-door"></i>
+                                Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="Incomes.html"><i class="bi bi-currency-exchange"></i> Add income</a>
+                            <a class="nav-link" href="Incomes.html"><i class="bi bi-currency-exchange"></i> Add
+                                income</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="Expenses.html"><i class="bi bi-cart"></i> Add expense</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="Balance.html"><i class="bi bi-graph-up-arrow"></i> Show balance</a>
+                            <a class="nav-link active" href="Balance.html"><i class="bi bi-graph-up-arrow"></i> Show
+                                balance</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="Settings.html"><i class="bi bi-gear"></i> Settings</a>
@@ -55,9 +57,273 @@
         </nav>
     </header>
 
+    <section>
+        <div class="px-4 my-4 text-center">
+            <div class="dropdown-center">
+                <button class="btn btn-primary dropdown-toggle" id="dropdownButton" type="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">Choose period</button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Current month</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Previous month</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Current year</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#periodModal">Other</a>
+                    </li>
+                    </form>
+                </ul>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <article>
+        <div class="modal fade" id="periodModal" tabindex="-1" role="dialog" aria-labelledby="period modal"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="periodModalLabel">Choose period</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-10 mx-auto col-lg-10">
+                            <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" id="fromDate" placeholder="From"
+                                        min="1970-01-01">
+                                    <label for="fromDate">From</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" id="toDate" placeholder="To"
+                                        min="1970-01-01">
+                                    <label for="toDate">To</label>
+                                </div>
+                                <button class="w-100 btn btn-lg btn-primary mt-3" type="button">Apply</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <article>
+        <div class="px-4 my-4 text-center">
+            <h2 class="display-6 fw-bold text-body-emphasis">Incomes</h2>
+            <div class="col-lg-6 mx-auto mt-3 col-incomes border rounded-3 bg-body-tertiary">
+                <h2 class="py-3">Details</h2>
+                <div class="container text-center px-5 pb-5">
+                    <div class="row row-data border rounded-3">
+                        <div class="col">
+                            <div class="row">
+                                <h3 class="row-date">2023-05-13</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="row row-source">
+                                    Salary
+                                </div>
+                                <div class="row row-comment">
+                                    Comment
+                                </div>
+                            </div>
+                            <div class="col-4 align-self-end text-end row-amount">
+                                5000.00 PLN
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-data border rounded-3 mt-3">
+                        <div class="row">
+                            <h3 class="row-date">2023-05-12</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="row row-source">
+                                    Sale
+                                </div>
+                                <div class="row row-comment">
+                                    Comment
+                                </div>
+                            </div>
+                            <div class="col-4 align-self-end text-end row-amount">
+                                2000.00 PLN
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-data border rounded-3 mt-3">
+                        <div class="row">
+                            <h3 class="row-date">2023-05-11</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="row row-source">
+                                    Bank interest
+                                </div>
+                                <div class="row row-comment">
+                                    Comment
+                                </div>
+                            </div>
+                            <div class="col-4 align-self-end text-end row-amount">
+                                1000.00 PLN
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mx-auto mt-4 col-incomes border rounded-3 bg-body-tertiary">
+                <h2 class="py-3">Summary</h2>
+                <div class="container text-center px-5 pb-5">
+                    <div class="row row-data-categories border rounded-3">
+                        <div class="col">Salary</div>
+                        <div class="col">5000.00 PLN</div>
+                    </div>
+                    <div class="row row-data-categories border rounded-3 mt-2">
+                        <div class="col">Sale</div>
+                        <div class="col">2000.00 PLN</div>
+                    </div>
+                    <div class="row row-data-categories border rounded-3 mt-2">
+                        <div class="col">Bank interest</div>
+                        <div class="col">1000.00 PLN</div>
+                    </div>
+                    <hr class="my-4">
+                    <div class="row row-data-categories border rounded-3 mt-2">
+                        <div class="col">Sum</div>
+                        <div class="col">8000.00 PLN</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+    <article>
+        <div class="px-4 my-5 text-center">
+            <h2 class="display-6 fw-bold text-body-emphasis">Expenses</h2>
+            <div class="col-lg-6 mx-auto mt-3 col-incomes border rounded-3 bg-body-tertiary">
+                <h2 class="py-3">Details</h2>
+                <div class="container text-center px-5 pb-5">
+                    <div class="row row-data border rounded-3">
+                        <div class="row">
+                            <h3 class="row-date">2023-05-13</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="row row-source">
+                                    Food
+                                </div>
+                                <div class="row row-payment">
+                                    Credit card
+                                </div>
+                                <div class="row row-comment">
+                                    Comment
+                                </div>
+                            </div>
+                            <div class="col-4 align-self-end text-end row-amount">
+                                150.00 PLN
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-data border rounded-3 mt-3">
+                        <div class="row">
+                            <h3 class="row-date">2023-05-12</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="row row-source">
+                                    Apartment
+                                </div>
+                                <div class="row row-payment">
+                                    Cash
+                                </div>
+                                <div class="row row-comment">
+                                    Comment
+                                </div>
+                            </div>
+                            <div class="col-4 align-self-end text-end row-amount">
+                                1500.00 PLN
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-data border rounded-3 mt-3">
+                        <div class="row">
+                            <h3 class="row-date">2023-05-11</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="row row-source">
+                                    Clothes
+                                </div>
+                                <div class="row row-payment">
+                                    Debit card
+                                </div>
+                                <div class="row row-comment">
+                                    Comment
+                                </div>
+                            </div>
+                            <div class="col-4 align-self-end text-end row-amount">
+                                500.00 PLN
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mx-auto mt-4 col-incomes border rounded-3 bg-body-tertiary">
+                <h2 class="py-3">Summary</h2>
+                <div class="container text-center px-5 pb-5">
+                    <div class="row row-data-categories border rounded-3">
+                        <div class="col">Food</div>
+                        <div class="col">150.00 PLN</div>
+                    </div>
+                    <div class="row row-data-categories border rounded-3 mt-2">
+                        <div class="col">Apartment</div>
+                        <div class="col">1500.00 PLN</div>
+                    </div>
+                    <div class="row row-data-categories border rounded-3 mt-2">
+                        <div class="col">Clothes</div>
+                        <div class="col">500.00 PLN</div>
+                    </div>
+                    <hr class="my-4">
+                    <div class="row row-data-categories border rounded-3 mt-2">
+                        <div class="col">Sum</div>
+                        <div class="col">2150.00 PLN</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+
     <main>
         <article>
-           
+            <div class="px-4 my-5 text-center">
+                <h2 class="display-6 fw-bold text-body-emphasis">Overview</h2>
+                <div class="col-lg-6 mx-auto mt-4 col-incomes border rounded-3 bg-body-tertiary">
+                    <div class="container text-center px-5 py-5">
+                        <div class="row row-data-overview border rounded-3 mt-2">
+                            <div class="col">Incomes</div>
+                            <div class="col">8000.00 PLN</div>
+                        </div>
+                        <div class="row row-data-overview border rounded-3 mt-2">
+                            <div class="col">Expenses</div>
+                            <div class="col">2150.00 PLN</div>
+                        </div>
+                        <hr class="my-4">
+                        <div class="row row-data-overview border rounded-3 mt-2">
+                            <div class="col">Balance</div>
+                            <div class="col" style="color: rgb(46, 192, 46)">5850.00 PLN</div>
+                        </div>
+                        <p class="pt-5">Congratulations! You manage Your budget well.</p>
+                    </div>
+                </div>
+            </div>
         </article>
     </main>
 </body>
