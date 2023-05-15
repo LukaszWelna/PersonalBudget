@@ -80,3 +80,7 @@ input[type="number"] {
     background-color: #21252A;
     padding: 10px 0 10px 20px;
 }
+
+#incomeComment, #expenseComment {
+    resize: none;
+}

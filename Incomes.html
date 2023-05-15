@@ -12,6 +12,7 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 
 <body>
@@ -60,16 +61,16 @@
                     <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
                         <div class="form-floating mb-3">
                             <input type="number" class="form-control" id="incomeAmount"
-                                placeholder="Income amount" step="0.01" min="0">
+                                placeholder="Income amount" step="0.01" min="0" required>
                             <label for="incomeAmount">Amount</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="date" class="form-control" id="incomeDate"
-                                placeholder="Date" min="1970-01-01">
+                                placeholder="Date" min="1970-01-01" required>
                             <label for="incomeDate">Date</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <select class="form-select form-select-md mb-3" id="incomeSource" aria-label="choose income source">
+                            <select class="form-select form-select-md mb-3" id="incomeSource" aria-label="choose income source" required>
                                 <option selected>Choose option</option>
                                 <option value="1">Salary</option>
                                 <option value="2">Bank interest</option>

@@ -12,6 +12,7 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 
 <body>
@@ -61,16 +62,16 @@
                     <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
                         <div class="form-floating mb-3">
                             <input type="number" class="form-control" id="expenseAmount"
-                                placeholder="Income amount" step="0.01" min="0">
+                                placeholder="Income amount" step="0.01" min="0" required>
                             <label for="incomeAmount">Amount</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="date" class="form-control" id="expenseDate"
-                                placeholder="Date" min="1970-01-01">
+                                placeholder="Date" min="1970-01-01" required>
                             <label for="incomeDate">Date</label>
                         </div>
                         <div class="form-floating">
-                            <select class="form-select form-select-md mb-3" id="expensePayment" aria-label="choose payment method">
+                            <select class="form-select form-select-md mb-3" id="expensePayment" aria-label="choose payment method" required>
                                 <option selected>Choose option</option>
                                 <option value="1">Cash</option>
                                 <option value="2">Debit card</option>
@@ -79,7 +80,7 @@
                               <label for="incomeSource">Payment</label>
                         </div>
                         <div class="form-floating">
-                            <select class="form-select form-select-md mb-3" id="expenseSource" aria-label="choose expense source">
+                            <select class="form-select form-select-md mb-3" id="expenseSource" aria-label="choose expense source" required>
                                 <option selected>Choose option</option>
                                 <option value="1">Food</option>
                                 <option value="2">Apartment</option>
