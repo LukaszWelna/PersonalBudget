@@ -14,13 +14,19 @@ body {
     margin-bottom: 25px;
 }
 
-.sign-up {
+.sign-up  {
     background-color: rgb(46, 192, 46);
     border-color: rgb(46, 192, 46);
 }
 
 .sign-up:hover {
-    background-color: rgb(61, 177, 61);
+    background-color: rgb(61, 177, 61) !important;
+    border-color: rgb(46, 192, 46) !important;
+}
+
+.sign-up:focus, .sign-up:active {
+    background-color: rgb(46, 148, 46) !important;
+    border-color: rgb(46, 192, 46) !important;
 }
 
 .btn-close:focus {
@@ -83,4 +89,25 @@ input[type="number"] {
 
 #incomeComment, #expenseComment {
     resize: none;
+}
+
+#showPassword, #rememberMe {
+    box-shadow: none;
+    outline: none;
+}
+
+.forgotPassword {
+    text-align: center;
+}
+
+.hCentered {
+    text-align: center;
+}
+
+.btn-edit-profile {
+    width: 100%;
+}
+
+.col-title {
+    color: white;
 }

@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+{% if currentUser.id %}
+<main>
+    <article>
+        <div class="px-4 pt-5 text-center">
+            <div class="col-lg-6 mx-auto">
+                <h2 class="">“A budget isn't about restricting what you can spend. It gives you permission to spend
+                    without
+                    guilt or regret.”</h2>
+                <p>- Dave Ramsey</p>
+            </div>
+            <div class="overflow-hidden" style="max-height: 100vh;">
+                <div class="container px-5">
+                    <img src="/images/budget.jpg" class="img-fluid border rounded-3 shadow-lg mb-4" alt="budget-img"
+                        width="700" height="500" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </article>
+</main>
+
+{% else %}
+
+<main>
+    <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+        {% for message in flashMessages %}
+        <div class="alert alert-{{ message.type }}">
+            {{ message.body }}
+        </div>
+        {% endfor %}
+        <div class="row align-items-center g-lg-5 py-5">
+            <div class="col-lg-7 text-center text-lg-start">
+                <article>
+                    <header>
+                        <img class="logo" src="/images/logo.png" width="80%">
+                        <p class="col-lg-12 fs-4">This application allows to create own financial spreadsheet in a
+                            simple
+                            way.
+                            Creating a personal budget is the key to gaining control of your money.</p>
+                    </header>
+                </article>
+            </div>
+            <div class="col-md-10 mx-auto col-lg-5">
+                <article>
+                    <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" method="post" action="/login/create"
+                        id="formSignin">
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="floatingEmailSignin"
+                                placeholder="name@example.com" name="email" value="{{ email }}" autocomplete="on"
+                                required>
+                            <label for="floatingEmailSignin">Email address</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="floatingPasswordSignin"
+                                placeholder="Password" name="password" required>
+                            <label for="floatingPasswordSignin">Password</label>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" {% if
+                                rememberMe %} checked="checked" {% endif %}>
+                            <label class="form-check-label" for="rememberMe">
+                                Remember me
+                            </label>
+                        </div>
+                        <button class="w-100 btn btn-lg btn-primary mt-3 sign-in mb-3" type="submit">Sign in</button>
+                        <div class="forgotPassword">
+                            <a href="/password/forgot">Forgot password?</a>
+                        </div>
+                        <hr class="my-4">
+                        <button class="w-100 btn btn-lg btn-primary sign-up" type="button" data-bs-toggle="modal"
+                            data-bs-target="#signUpModal">Sign up</button>
+                    </form>
+                </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Modal -->
+<article>
+    <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="sign up modal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signUpModalLabel">Sign up</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-10 mx-auto col-lg-10">
+                        <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" method="post" action="/signup/create"
+                            id="formSignup">
+                            <div class="form-floating" id="signupName">
+                                <input type="text" class="form-control" id="floatingNameSignup" placeholder="First name"
+                                    name="name" autocomplete="on" value="{{ user.name }}">
+                                <label for="floatingNameSignup">Name</label>
+                            </div>
+                            <div class="form-floating mt-3" id="signupEmail">
+                                <input type="email" class="form-control" id="floatingEmailSignup"
+                                    placeholder="name@example.com" name="email" type="email" autocomplete="on"
+                                    value="{{ user.email }}">
+                                <label for="floatingEmailSignup">Email address</label>
+                            </div>
+                            <div class="form-floating mt-3" id="signupPassword">
+                                <input type="password" class="form-control" id="floatingPasswordSignup"
+                                    placeholder="Password" name="password">
+                                <label for="floatingPasswordSignup">Password</label>
+                            </div>
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" id="showPassword">
+                                <label class="form-check-label" for="showPassword">
+                                    Show password
+                                </label>
+                            </div>
+                            <button class="w-100 btn btn-lg btn-primary mt-5 sign-up" type="submit">Sign up</button>
+                        </form>
+                        {% if user.errors is not empty %}
+                        <ul class="mt-2">
+                            {% for error in user.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+{% endif %}
+
+{% endblock %}
+
+{% block footer %}
+{% if currentUser.id %}
+
+{% else %}
+<script src="/js/app.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#formSignup').validate({
+            rules: {
+                name: 'required',
+                email: {
+                    required: true,
+                    email: true,
+                    remote: '/account/validateEmail'
+                },
+                password: {
+                    required: true,
+                    minlength: 6,
+                    validPassword: true
+                }
+            },
+            messages: {
+                email: {
+                    remote: 'Email already exists in database'
+                }
+            },
+            errorPlacement: function (error, element) {
+                if (element.attr("name") == "name")
+                    error.insertAfter('#signupName')
+                else if (element.attr("name") == "email")
+                    error.insertAfter('#signupEmail')
+                else if (element.attr("name") == "password")
+                    error.insertAfter('#signupPassword')
+            }
+        });
+
+        $('#showPassword').on('click', function () {
+            var passInput = $('#floatingPasswordSignup');
+            if (passInput.attr('type') === 'password') {
+                passInput.attr('type', 'text');
+            } else {
+                passInput.attr('type', 'password');
+            }
+        });
+
+    });
+</script>
+
+{% endif %}
+
+{% endblock %}
