@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Forgot password{% endblock %}
+
+{% block body %}
+
+<main>
+    <article>
+        <div class="col-md-10 mx-auto col-lg-4 mt-5">
+            <article>
+                <h1 class="mb-3 hCentered">Request password reset</h1>
+                <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" method="post"
+                    action="/password/requestReset">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" type="email" id="inputEmail" name="email"
+                            placeholder="name@example.com" autofocus required>
+                        <label for="inputEmail">Email address</label>
+                    </div>
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Send password reset</button>
+                </form>
+            </article>
+        </div>
+    </article>
+</main>
+
+{% endblock %}
+
+
+{% block footer %}
+{% endblock %}
