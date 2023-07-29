@@ -64,6 +64,8 @@ namespace Core;
             $twig = new \Twig\Environment($loader);
             $twig -> addGlobal('currentUser', \App\Auth::getUser());
             $twig -> addGlobal('flashMessages', \App\Flash::getMessages());
+            $twig -> addGlobal('currentDate', \App\Date::getCurrentDate());
+            
         }
         return $twig -> render($template, $args);
     }

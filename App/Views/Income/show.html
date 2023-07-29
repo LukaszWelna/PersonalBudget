@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Income{% endblock %}
+
+{% block body %}
+
+<main>
+    <article>
+        <div class="col-md-10 mx-auto col-lg-4 mt-5">
+            {% for message in flashMessages %}
+            <div class="alert alert-{{ message.type }}">
+                {{ message.body }}
+            </div>
+            {% endfor %}
+            <article>
+                <h1 class="mb-3 hCentered">Add income</h1>
+                <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" method="post" action="/income/add"
+                        id="formIncome">
+                    <div class="form-floating" id="divIncomeAmount">
+                        <input type="number" class="form-control" id="incomeAmount"
+                            placeholder="Income amount" step="0.01" name="amount" value="{{ income.amount }}" required>
+                        <label for="incomeAmount">Amount</label>
+                    </div>
+                    <div class="form-floating mt-3" id="divIncomeDate">
+                        <input type="date" class="form-control" id="incomeDate"
+                            placeholder="Date" name="dateOfIncome" min="2000-01-01" max="{{ currentDate }}"
+                                {% if income.dateOfIncome %}
+                                    value="{{ income.dateOfIncome }}" 
+                                {% else %}
+                                    value="{{ currentDate }}" 
+                                {% endif %}                           
+                            required>
+                        <label for="incomeDate">Date</label>
+                    </div>
+                    <div class="form-floating mt-3" id="divIncomeSource">
+                        <select class="form-select form-select-md mt-3" id="incomeSource" aria-label="choose income source"
+                                name="incomeCategoryAssignedToUserId" required>
+                            <option value="">Choose option</option>
+                           {% for incomeCategory in incomeCategories %}
+                            <option value="{{ incomeCategory.id }}" {% if incomeCategory.id == income.incomeCategoryAssignedToUserId %} selected {% endif %}>
+                                {{ incomeCategory.name }}</option>
+                           {% endfor %}
+                          </select>
+                          <label for="incomeSource">Source</label>
+                    </div>
+                      <div class="form-floating mt-3" id="divIncomeComment">
+                        <textarea class="form-control" id="incomeComment" placeholder="Comment" maxlength="25"
+                                    name="incomeComment">{{ income.incomeComment }}</textarea>
+                        <label for="incomeComment">Comment</label>
+                      </div>
+                    <hr class="my-4">
+                    <button class="w-100 btn btn-lg btn-primary mb-2" type="submit">Apply</button>
+                </form>
+                        {% if income.errors is not empty %}
+                        <ul class="mt-2">
+                            {% for error in income.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+            </article>
+        </div>
+    </article>
+</main>
+
+{% endblock %}
+
+
+{% block footer %}
+
+<script src="/js/validateAmount.js"></script>
+<script src="/js/validateDate.js"></script>
+
+<script>
+
+    $("#formIncome").validate({
+        rules: {
+            amount: {
+                required: true,
+                amountMin: true,
+                max: 99999999.99,
+                decimalPlaces: true
+            },
+            dateOfIncome: {
+                dateTime: true,
+                min: "2000-01-01",
+                dateNotGreaterThanToday: true
+            },
+            incomeCategoryAssignedToUserId: {
+                required: true
+            }
+        },
+        messages: {
+            amount: {
+                max: 'Please enter a value lower than 100000000.'
+                },
+            dateOfIncome: {
+                min: 'Please enter a date equal or greather than 01-01-2000.'
+            }
+            },
+        errorPlacement: function (error, element) {
+            if (element.attr("name") == "amount")
+                error.insertAfter('#divIncomeAmount')
+            else if (element.attr("name") == "dateOfIncome")
+                error.insertAfter('#divIncomeDate')
+            else if (element.attr("name") == "incomeCategoryAssignedToUserId")
+                error.insertAfter('#divIncomeSource')
+        }
+    });
+    
+       
+</script>
+
+{% endblock %}
