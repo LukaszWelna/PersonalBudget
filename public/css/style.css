@@ -111,3 +111,12 @@ input[type="number"] {
 .col-title {
     color: white;
 }
+
+.form-select {
+    max-height: 200px; /* Set a maximum height if you want to limit the dropdown's size */
+    overflow-y: auto; /* Enable vertical scrolling if the content overflows */
+  }
+
+.form-select[data-bs-popper] {
+    --bs-popper-placement: bottom !important;
+  }

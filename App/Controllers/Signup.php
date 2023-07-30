@@ -22,6 +22,8 @@ class Signup extends \Core\Controller {
 
         if ($user -> save()) {
 
+            User::setDefaultCategoriesToUser();
+
             $user -> sendActivationEmail();
             
             $this -> redirect('/signup/success');

@@ -30,23 +30,23 @@
                 <div class="navbar-collapse collapse" id="navbarsExample09">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/"><i class="bi bi-house-door"></i>
+                            <a class="nav-link {% if actualPage == 'Home' %} active {% endif %}" href="/"><i class="bi bi-house-door"></i>
                                 Home</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="/"><i class="bi bi-currency-exchange"></i> Add
+                            <a class="nav-link {% if actualPage == 'Income' %} active {% endif %}" href="/income/show"><i class="bi bi-currency-exchange"></i> Add
                                 income</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/"><i class="bi bi-cart"></i> Add expense</a>
+                            <a class="nav-link {% if actualPage == 'Expense' %} active {% endif %}" href="/expense/show"><i class="bi bi-cart"></i> Add expense</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/"><i class="bi bi-graph-up-arrow"></i> Show
                                 balance</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/profile/show"><i class="bi bi-gear"></i> Profile</a>
+                            <a class="nav-link {% if actualPage == 'Profile' %} active {% endif %}" href="/profile/show"><i class="bi bi-gear"></i> Profile</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/Login/destroy"><i class="bi bi-box-arrow-right"></i> Logout</a>

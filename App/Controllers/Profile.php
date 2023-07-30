@@ -33,6 +33,18 @@ use \App\Flash;
      }
 
     /**
+    * Class constructor
+    *
+    * @return void
+    */
+
+   public function __construct() {
+
+    $_SESSION["page"] = 'Profile';
+
+}
+
+    /**
      * Show the profile
      * 
      * @return void

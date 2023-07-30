@@ -1,5 +1,5 @@
 /**
- * Add jQuery Validation plugin meyhod for a valid password
+ * Add jQuery Validation plugin method for a valid password
  * 
  * Valid passwords contain at least one letter and one nuber
  * 

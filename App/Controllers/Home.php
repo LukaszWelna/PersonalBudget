@@ -11,6 +11,18 @@ use \App\Auth;
 
  class Home extends \Core\Controller {
 
+   /**
+    * Class constructor
+    *
+    * @return void
+    */
+
+   public function __construct() {
+
+      $_SESSION["page"] = 'Home';
+
+  }
+
     /**
      * Show the index page
      * 
@@ -18,8 +30,10 @@ use \App\Auth;
      */
      public function indexAction() {
 
+        $_SESSION["page"] = 'Home';
+
         View::renderTemplate('Home/index.html');
-        
+
      }
 
  }
