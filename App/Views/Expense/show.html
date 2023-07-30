@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Expense{% endblock %}
+
+{% block body %}
+
+<main>
+    <article>
+        <div class="col-md-10 mx-auto col-lg-4 mt-5">
+            {% for message in flashMessages %}
+            <div class="alert alert-{{ message.type }}">
+                {{ message.body }}
+            </div>
+            {% endfor %}
+            <article>
+                <h1 class="mb-3 hCentered">Add expense</h1>
+                <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" method="post" action="/expense/add"
+                        id="formExpense">
+                    <div class="form-floating" id="divExpenseAmount">
+                        <input type="number" class="form-control" id="expenseAmount"
+                            placeholder="Expense amount" step="0.01" name="amount" value="{{ expense.amount }}" required>
+                        <label for="expenseAmount">Amount</label>
+                    </div>
+                    <div class="form-floating mt-3" id="divExpenseDate">
+                        <input type="date" class="form-control" id="expenseDate"
+                            placeholder="Date" name="dateOfExpense" min="2000-01-01" max="{{ currentDate }}"
+                                {% if expense.dateOfExpense %}
+                                    value="{{ expense.dateOfExpense }}" 
+                                {% else %}
+                                    value="{{ currentDate }}" 
+                                {% endif %}                           
+                            required>
+                        <label for="expenseDate">Date</label>
+                    </div>
+                    <div class="form-floating mt-3" id="divPaymentMethod">
+                        <select class="form-select form-select-md mt-3" id="paymentMethod" aria-label="payment method"
+                                name="paymentMethodAssignedToUserId" required>
+                            <option value="">Choose option</option>
+                           {% for paymentMethod in paymentMethods %}
+                            <option value="{{ paymentMethod.id }}" {% if paymentMethod.id == expense.paymentMethodAssignedToUserId %} selected {% endif %}>
+                                {{ paymentMethod.name }}</option>
+                           {% endfor %}
+                          </select>
+                          <label for="paymentMethod">Payment</label>
+                    </div>
+                    <div class="form-floating mt-3" id="divExpenseSource">
+                        <select class="form-select form-select-md mt-3" id="expenseSource" aria-label="choose expense source"
+                                name="expenseCategoryAssignedToUserId" required>
+                            <option value="">Choose option</option>
+                           {% for expenseCategory in expenseCategories %}
+                            <option value="{{ expenseCategory.id }}" {% if expenseCategory.id == expense.expenseCategoryAssignedToUserId %} selected {% endif %}>
+                                {{ expenseCategory.name }}</option>
+                           {% endfor %}
+                          </select>
+                          <label for="expenseSource">Category</label>
+                    </div>
+                      <div class="form-floating mt-3" id="divExpenseComment">
+                        <textarea class="form-control" id="expenseComment" placeholder="Comment" maxlength="25"
+                                    name="expenseComment">{{ expense.expenseComment }}</textarea>
+                        <label for="expenseComment">Comment</label>
+                      </div>
+                    <hr class="my-4">
+                    <button class="w-100 btn btn-lg btn-primary mb-2" type="submit">Apply</button>
+                </form>
+                        {% if expense.errors is not empty %}
+                        <ul class="mt-2">
+                            {% for error in expense.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+            </article>
+        </div>
+    </article>
+</main>
+
+{% endblock %}
+
+{% block footer %}
+
+<script src="/js/validateAmount.js"></script>
+<script src="/js/validateDate.js"></script>
+
+<script>
+
+    $("#formExpense").validate({
+        rules: {
+            amount: {
+                required: true,
+                amountMin: true,
+                max: 99999999.99,
+                decimalPlaces: true
+            },
+            dateOfExpense: {
+                dateTime: true,
+                min: "2000-01-01",
+                dateNotGreaterThanToday: true
+            },
+            expenseCategoryAssignedToUserId: {
+                required: true
+            },
+            paymentMethodAssignedToUserId: {
+                required: true
+            }
+        },
+        messages: {
+            amount: {
+                max: 'Please enter a value lower than 100000000.'
+                },
+            dateOfExpense: {
+                min: 'Please enter a date equal or greather than 01-01-2000.'
+            }
+            },
+        errorPlacement: function (error, element) {
+            if (element.attr("name") == "amount")
+                error.insertAfter('#divExpenseAmount')
+            else if (element.attr("name") == "dateOfExpense")
+                error.insertAfter('#divExpenseDate')
+            else if (element.attr("name") == "paymentMethodAssignedToUserId")
+                error.insertAfter('#divPaymentMethod')
+            else if (element.attr("name") == "expenseCategoryAssignedToUserId")
+                error.insertAfter('#divExpenseSource')
+        }
+    });
+    
+</script>
+
+{% endblock %}
