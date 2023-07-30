@@ -29,7 +29,15 @@ use \App\Models\IncomeCategoryUsers;
      */
     public $incomeCategories;
 
+
+    /**
+     * Class constructor
+     * 
+     * @return void
+     */
     public function __construct() {
+
+        $_SESSION["page"] = 'Income';
 
         $this -> loggedUserId = Auth::getUser() -> id;
 
@@ -78,7 +86,7 @@ use \App\Models\IncomeCategoryUsers;
     }
 
       /**
-      * Show successful message of adding the income
+      * Show successful message after adding the income
       * @return void
       */
       public function incomeAddedMessageAction() {

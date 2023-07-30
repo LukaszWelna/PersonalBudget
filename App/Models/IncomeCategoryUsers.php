@@ -2,10 +2,6 @@
 
 namespace App\Models;
 
-use \App\Mail;
-use \Core\View;
-use \App\Date;
-
 use PDO;
 
 /**
@@ -21,7 +17,7 @@ use PDO;
     public $id;
 
     /**
-     * UserId
+     * User id
      * @var int
      */
     public $userId;
