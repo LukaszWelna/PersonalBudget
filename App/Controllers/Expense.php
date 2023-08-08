@@ -11,7 +11,7 @@ use \App\Models\ExpenseCategoryUsers;
 use \App\Models\PaymentMethodUsers;
 
 /**
- * Account controller
+ * Expense controller
  */
 
  class Expense extends Authenticated {

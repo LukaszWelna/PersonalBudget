@@ -60,7 +60,7 @@ namespace Core;
          $message .= "\nThrown in '" . $exception->getFile() . "' on line " . $exception->getLine();
 
          error_log($message);
-         //echo "<h1>An error occurred</h1>";
+
          View::renderTemplate("$code.html");
      }
  }

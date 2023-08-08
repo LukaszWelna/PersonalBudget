@@ -9,7 +9,7 @@ use \App\Date;
 use PDO;
 
 /**
- * Income model
+ * Expense model
  */
 
  class Expense extends \Core\Model {
@@ -151,16 +151,17 @@ use PDO;
                     $this -> errors[] = "Invalid date";
                 }
             }
+
+            if (strtotime($this -> dateOfExpense) < strtotime('2000-01-01')) {
+                $this -> errors[] = "Date must be equal or greather than 01-01-2000";
+            }
+    
+            if (strtotime($this -> dateOfExpense) > strtotime(Date::getCurrentDate())) {
+                $this -> errors[] = "Date must be equal or earlier than current date";
+            }
+
         } else {
             $this -> errors[] = "Date is required";
-        }
-
-        if (strtotime($this -> dateOfExpense) < strtotime('2000-01-01')) {
-            $this -> errors[] = "Date must be equal or greather than 01-01-2000";
-        }
-
-        if (strtotime($this -> dateOfExpense) > strtotime(Date::getCurrentDate())) {
-            $this -> errors[] = "Date must be equal or earlier than current date";
         }
 
         // Payment
@@ -172,6 +173,99 @@ use PDO;
         if ((preg_match('/^[1-9][0-9]*/', $this -> expenseCategoryAssignedToUserId)) == 0) {
             $this -> errors[] = 'Expense category invalid';
         } 
+
+      }
+
+        /**
+       * Get all expenses in defined date period
+       * 
+       * @param int $loggedUserId Logged user id
+       * @param array $dates Dates range
+       * 
+       * @return mixed Array with all expenses, false if not found 
+       */
+      public static function getAll($loggedUserId, $dates) {
+
+        $sql = 'SELECT expenses.*, expenses_category_assigned_to_users.name 
+                FROM expenses 
+                INNER JOIN expenses_category_assigned_to_users 
+                ON expenses.expenseCategoryAssignedToUserId = expenses_category_assigned_to_users.id 
+                WHERE expenses.userId = :loggedUserId 
+                AND expenses.dateOfExpense BETWEEN :startDate AND :endDate ORDER BY expenses.dateOfExpense DESC';
+
+        $db = static::getDB();
+        $stmt = $db -> prepare($sql);
+        $stmt -> bindValue(':loggedUserId', $loggedUserId, PDO::PARAM_INT);
+        $stmt -> bindValue(':startDate', $dates['start'], PDO::PARAM_STR);
+        $stmt -> bindValue(':endDate', $dates['end'], PDO::PARAM_STR);
+        $stmt -> setFetchMode(PDO::FETCH_ASSOC);
+        $stmt -> execute();
+
+        return $stmt -> fetchAll();
+
+      }
+
+       /**
+       * Get grouped expenses in defined date period
+       * 
+       * @param int $loggedUserId Logged user id
+       * @param array $dates Dates range
+       * 
+       * @return mixed Array with grouped expenses, false if not found  
+       */
+      public static function getGroupedUserExpenses($loggedUserId, $dates) {
+ 
+        $sql = 'SELECT expenses_category_assigned_to_users.name AS label, SUM(expenses.amount) AS y
+                FROM expenses_category_assigned_to_users
+                INNER JOIN expenses ON expenses_category_assigned_to_users.id = expenses.expenseCategoryAssignedToUserId
+                WHERE
+                expenses.dateOfExpense BETWEEN :startDate AND :endDate
+                AND expenses.userId = :loggedUserId
+                GROUP BY label
+                ORDER BY y DESC';
+
+        $db = static::getDB();
+        $stmt = $db -> prepare($sql);
+        $stmt -> bindValue(':loggedUserId', $loggedUserId, PDO::PARAM_INT);
+        $stmt -> bindValue(':startDate', $dates['start'], PDO::PARAM_STR);
+        $stmt -> bindValue(':endDate', $dates['end'], PDO::PARAM_STR);
+        $stmt -> setFetchMode(PDO::FETCH_ASSOC);
+        $stmt -> execute();
+
+        return $stmt -> fetchAll();
+
+      }
+
+       /**
+       * Get total amount of expenses
+       * 
+       * @param int $loggedUserId Logged user id
+       * @param array $dates Dates range
+       * 
+       * @return integer total amount of expenses
+       */
+      public static function getTotalAmount($loggedUserId, $dates) {
+ 
+        $sql = 'SELECT SUM(expenses.amount) AS totalAmount
+                FROM expenses 
+                WHERE expenses.dateOfExpense BETWEEN :startDate AND :endDate
+                AND expenses.userId = :loggedUserId';
+
+        $db = static::getDB();
+        $stmt = $db -> prepare($sql);
+        $stmt -> bindValue(':loggedUserId', $loggedUserId, PDO::PARAM_INT);
+        $stmt -> bindValue(':startDate', $dates['start'], PDO::PARAM_STR);
+        $stmt -> bindValue(':endDate', $dates['end'], PDO::PARAM_STR);
+        $stmt -> setFetchMode(PDO::FETCH_ASSOC);
+        $stmt -> execute();
+
+        $data = $stmt -> fetch();
+
+        if ($data['totalAmount']) {
+            return $data['totalAmount'];
+        } else {
+            return 0;
+        }
 
       }
 

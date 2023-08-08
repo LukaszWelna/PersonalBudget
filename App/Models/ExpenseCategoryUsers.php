@@ -31,7 +31,7 @@ use PDO;
     /**
      * Get all categories assigned to user
      * 
-     * @return void
+     * @return array
      * 
      */
     static public function getAll($loggedUserId) {

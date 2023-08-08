@@ -10,7 +10,7 @@ use \App\Date;
 use \App\Models\IncomeCategoryUsers;
 
 /**
- * Account controller
+ * Income controller
  */
 
  class Income extends Authenticated {

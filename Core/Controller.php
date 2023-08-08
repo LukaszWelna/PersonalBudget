@@ -47,7 +47,6 @@ use \App\Flash;
                 $this -> after();
             }
         } else {
-            //echo "Method $method not found in controller " . get_class($this);
             throw new \Exception("Method $method not found in controller " . get_class($this));
         }
     }
@@ -81,7 +80,7 @@ use \App\Flash;
       */
       public function redirect($url) {
 
-        header('Location: http://' . $_SERVER['HTTP_HOST'] . $url, true, 303);
+        header('Location: https://' . $_SERVER['HTTP_HOST'] . $url, true, 303);
             exit;
      }
 
