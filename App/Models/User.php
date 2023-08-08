@@ -555,9 +555,11 @@ use PDO;
      */
     public static function setDefaultCategoriesToUser() {
 
-      static::setDefaultIncomeCategories();
-      static::setDefaultExpenseCategories();
-      static::setDefaultPaymentMethods();
+      $userId = static::getLastInsertedId();
+
+      static::setDefaultIncomeCategories($userId);
+      static::setDefaultExpenseCategories($userId);
+      static::setDefaultPaymentMethods($userId);
 
     }
 
@@ -568,14 +570,11 @@ use PDO;
      * @return void
      * 
      */
-    static function setDefaultIncomeCategories() {
+    static function setDefaultIncomeCategories($userId) {
 
-      $userId = static::getLastInsertedId();
-
-      $sql = 'INSERT INTO incomes_category_assigned_to_users (incomes_category_assigned_to_users.id, 
-                                                              incomes_category_assigned_to_users.userId, 
+      $sql = 'INSERT INTO incomes_category_assigned_to_users (incomes_category_assigned_to_users.userId, 
                                                               incomes_category_assigned_to_users.name) 
-              SELECT incomes_category_default.id, :userId, incomes_category_default.name 
+              SELECT :userId, incomes_category_default.name 
               FROM incomes_category_default'; 
 
       $db = static::getDB();
@@ -592,14 +591,11 @@ use PDO;
      * @return void
      * 
      */
-    static function setDefaultExpenseCategories() {
+    static function setDefaultExpenseCategories($userId) {
 
-      $userId = static::getLastInsertedId();
-
-      $sql = 'INSERT INTO expenses_category_assigned_to_users (expenses_category_assigned_to_users.id, 
-                                                              expenses_category_assigned_to_users.userId, 
+      $sql = 'INSERT INTO expenses_category_assigned_to_users (expenses_category_assigned_to_users.userId, 
                                                               expenses_category_assigned_to_users.name) 
-              SELECT expenses_category_default.id, :userId, expenses_category_default.name 
+              SELECT :userId, expenses_category_default.name 
               FROM expenses_category_default'; 
 
       $db = static::getDB();
@@ -616,14 +612,11 @@ use PDO;
      * @return void
      * 
      */
-    static function setDefaultPaymentMethods() {
+    static function setDefaultPaymentMethods($userId) {
 
-      $userId = static::getLastInsertedId();
-
-      $sql = 'INSERT INTO payment_methods_assigned_to_users (payment_methods_assigned_to_users.id, 
-                                                              payment_methods_assigned_to_users.userId, 
-                                                              payment_methods_assigned_to_users.name) 
-              SELECT payment_methods_default.id, :userId, payment_methods_default.name 
+      $sql = 'INSERT INTO payment_methods_assigned_to_users (payment_methods_assigned_to_users.userId, 
+                                                            payment_methods_assigned_to_users.name) 
+              SELECT :userId, payment_methods_default.name 
               FROM payment_methods_default'; 
 
       $db = static::getDB();

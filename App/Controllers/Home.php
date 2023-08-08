@@ -30,8 +30,6 @@ use \App\Auth;
      */
      public function indexAction() {
 
-        $_SESSION["page"] = 'Home';
-
         View::renderTemplate('Home/index.html');
 
      }

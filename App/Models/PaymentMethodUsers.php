@@ -31,7 +31,7 @@ use PDO;
     /**
      * Get all methods assigned to user
      * 
-     * @return void
+     * @return array
      * 
      */
     static public function getAll($loggedUserId) {

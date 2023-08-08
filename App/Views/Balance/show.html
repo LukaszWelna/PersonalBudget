@@ -1,0 +1,335 @@
+{% extends "base.html" %}
+
+{% block title %}Income{% endblock %}
+
+{% block body %}
+
+<section>
+    <div class="px-4 my-4 text-center">
+        <div class="col-lg-6 mx-auto mt-3">
+            {% for message in flashMessages %}
+            <div class="alert alert-{{ message.type }}">
+                {{ message.body }}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-4 mx-auto mt-3">
+            <form class="mt-1" method="post" action="/balance/showResults" id="formChoosePeriod">
+            <div class="form-floating mt-3" id="divChoosePeriod">
+                <select class="form-select form-select-md mt-3 form-choose-period" id="idChoosePeriod" aria-label="choose period"
+                        name="choosePeriod">
+                    <option value="1">Current month</option>
+                    <option value="2">Previous month</option>
+                    <option value="3">Current year</option>
+                    <option value="" data-bs-toggle="modal" data-bs-target="#periodModal">Another</option>
+                  </select>
+                  <label for="idChoosePeriod">Choose period</label>
+                  <button class="w-100 btn btn-lg btn-primary mt-2" id="submitForm" type="submit">Apply</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</section>
+
+<!-- Modal -->
+<article>
+    <div class="modal fade" id="periodModal" tabindex="-1" role="dialog" aria-labelledby="period modal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="periodModalLabel">Choose period</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-10 mx-auto col-lg-10">
+                        <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" method="post" action="/balance/showResults" id="formAnotherPeriod">
+                            <div class="form-floating mt" id="divStartDate">
+                                <input type="date" class="form-control" id="fromDate" placeholder="From" name="startDate" min="2000-01-01" max="{{ currentDate }}"
+                                {% if startDate %}
+                                    value="{{ startDate }}" 
+                                {% else %}
+                                    value="{{ currentDate }}" 
+                                {% endif %}                       
+                                required>
+                                <label for="fromDate">From</label>
+                            </div>
+                            <div class="form-floating mt-3" id="divEndDate">
+                                <input type="date" class="form-control" id="toDate" placeholder="To" name="endDate" min="2000-01-01" max="{{ currentDate }}"
+                                {% if endDate %}
+                                    value="{{ endDate }}" 
+                                {% else %}
+                                    value="{{ currentDate }}" 
+                                {% endif %}       
+                                required>
+                                <label for="toDate">To</label>
+                            </div>
+                            <hr class="my-4">
+                            <button class="w-100 btn btn-lg btn-primary" type="submit">Apply</button>
+                        </form>
+                        {% if date.errors is not empty %}
+                        <ul class="mt-2">
+                            {% for error in date.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+{% if selectedDate %}
+<article>
+    <div class="px-4 my-4 text-center">
+        <h2 class="display-6 fw-bold text-body-emphasis">Incomes</h2>
+        {% if userIncomes %}
+        <div class="col-lg-6 mx-auto mt-3 col-incomes border rounded-3 bg-body-tertiary">
+            <h2 class="py-2">Details</h2>
+            <div class="container text-center px-5 pb-4">
+                {% for userIncome in userIncomes %}
+                <div class="row row-data border rounded-3 mt-3">
+                    <div class="col">
+                        <div class="row">
+                            <h3 class="row-date">{{ userIncome.dateOfIncome }}</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="row row-source">
+                                {{ userIncome.name }}
+                            </div>
+                            <div class="row row-comment">
+                                {{ userIncome.incomeComment }}
+                            </div>
+                        </div>
+                        <div class="col-4 align-self-end text-end row-amount">
+                            {{ userIncome.amount }} PLN
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}  
+            </div>
+        </div>
+        {% endif %}
+        <div class="col-lg-6 mx-auto mt-4 col-incomes border rounded-3 bg-body-tertiary">
+            <h2 class="py-2">Summary</h2>
+            <div class="container text-center px-5 pb-4">
+                {% if groupedUserIncomes %}
+                {% for groupedUserIncome in groupedUserIncomes %}
+                <div class="row row-data-categories border rounded-3 mt-2">
+                    <div class="col">{{ groupedUserIncome.name }}</div>
+                    <div class="col">{{ groupedUserIncome.categoryAmount }} PLN</div>
+                </div>
+                {% endfor %}
+                <hr class="my-4">
+                {% endif %}
+                <div class="row row-data-categories border rounded-3 mt-2">
+                    <div class="col">Sum</div>
+                    <div class="col">{{ totalAmountOfUserIncomes }} PLN</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<article>
+    <div class="px-4 my-4 text-center">
+        <h2 class="display-6 fw-bold text-body-emphasis">Expenses</h2>
+        {% if userExpenses %}
+        <div class="col-lg-6 mx-auto mt-3 col-incomes border rounded-3 bg-body-tertiary">
+            <h2 class="py-2">Details</h2>
+            <div class="container text-center px-5 pb-4">
+                {% for userExpense in userExpenses %}
+                <div class="row row-data border rounded-3 mt-3">
+                    <div class="col">
+                        <div class="row">
+                            <h3 class="row-date">{{ userExpense.dateOfExpense }}</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="row row-source">
+                                {{ userExpense.name }}
+                            </div>
+                            <div class="row row-comment">
+                                {{ userExpense.expenseComment }}
+                            </div>
+                        </div>
+                        <div class="col-4 align-self-end text-end row-amount">
+                            {{ userExpense.amount }} PLN
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}  
+            </div>
+        </div>
+        {% endif %}
+        <div class="col-lg-6 mx-auto mt-4 col-incomes border rounded-3 bg-body-tertiary">
+            <h2 class="py-2">Summary</h2>
+            <div class="container text-center px-5 pb-4">
+                {% if groupedUserExpenses %}
+                {% for groupedUserExpense in groupedUserExpenses %}
+                <div class="row row-data-categories border rounded-3 mt-2">
+                    <div class="col">{{ groupedUserExpense.label }}</div>
+                    <div class="col">{{ groupedUserExpense.y }} PLN</div>
+                </div>
+                {% endfor %}
+                <hr class="my-4">
+                {% endif %}
+                <div class="row row-data-categories border rounded-3 mt-2">
+                    <div class="col">Sum</div>
+                    <div class="col">{{ totalAmountOfUserExpenses }} PLN</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<main>
+    <article>
+        <div class="px-4 my-5 text-center">
+            <h2 class="display-6 fw-bold text-body-emphasis">Overview</h2>
+            <div class="col-lg-6 mx-auto mt-4 col-incomes border rounded-3 bg-body-tertiary">
+                <div class="container text-center px-5 pt-3">
+                    <div class="row row-data-overview border rounded-3 mt-2">
+                        <div class="col">Incomes</div>
+                        <div class="col">{{ totalAmountOfUserIncomes }} PLN</div>
+                    </div>
+                    <div class="row row-data-overview border rounded-3 mt-2">
+                        <div class="col">Expenses</div>
+                        <div class="col">{{ totalAmountOfUserExpenses }} PLN</div>
+                    </div>
+                    <hr class="my-4">
+                    <div class="row row-data-overview border rounded-3 mt-2">
+                        <div class="col">Balance</div>
+                        <div class="col" {% if balance >= 0 %} style="color: rgb(46, 192, 46)"   
+                        {% else %} style="color: rgb(255, 0, 0)" {% endif %}>{{ balance|number_format(2, '.', '') }} PLN</div>
+                    </div>
+                    {% if balance >= 0 %}
+                    <p class="pt-4">Congratulations! You manage Your budget well.</p>
+                    {% else %}
+                    <p class="pt-4">Attention! Try to manage Your budget better.</p>
+                    {% endif %}
+                </div>
+                {% if userExpenses %}
+                <h2 class="mb-3">Your expenses</h2>
+                <div class="mx-auto" id="chartContainer" style="height: 300px;"></div>
+                {% endif %}
+            </div>
+        </div>
+    </article>
+</main>
+
+{% endif %}
+{% endblock %}
+
+{% block footer %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
+<script src="/js/validateDate.js"></script>
+
+<script>
+
+    $(document).ready(function(){
+        $("#idChoosePeriod").bind("change", function () {
+            if(this.value == '')
+            $('#periodModal').modal('show')
+        }).change();
+    });
+    
+    $(document).ready(function(){
+        $('#submitForm').click(function(){
+            if ($('#idChoosePeriod option:selected').val() == '') {
+                $('#periodModal').modal('show')
+            }
+        });
+    });
+
+    $.validator.addMethod("notAnother", function(value, element) {
+        return (value != '');
+    }, "");
+
+    $("#formChoosePeriod").validate({
+        rules: {
+            choosePeriod: {
+                notAnother: true
+            }
+        }        
+    });
+
+    $("#formAnotherPeriod").validate({
+        rules: {
+            startDate: {
+                dateTime: true,
+                min: "2000-01-01",
+                dateNotGreaterThanToday: true
+            },
+            endDate: {
+                dateTime: true,
+                min: "2000-01-01",
+                dateNotGreaterThanToday: true
+            },
+        },
+        messages: {
+            startDate: {
+                min: 'Please enter a date equal or greather than 01-01-2000.'
+                },
+            dateendDateOfExpense: {
+                min: 'Please enter a date equal or greather than 01-01-2000.'
+            }
+            },
+        errorPlacement: function (error, element) {
+            if (element.attr("name") == "startDate")
+                error.insertAfter('#divStartDate')
+            else if (element.attr("name") == "endDate")
+                error.insertAfter('#divEndDate')
+        }
+        
+    });
+</script>
+
+<script>
+
+    // Get values from twig
+    var groupedExpenses = JSON.parse('{{ groupedUserExpenses|json_encode|raw }}');
+    console.log(groupedExpenses);
+
+const colorSet = [];
+
+    for (i = 0; i < groupedExpenses.length; i++) {
+        const r = Math.floor(Math.random() * 255);
+        const g = Math.floor(Math.random() * 255); 
+        const b = Math.floor(Math.random() * 255);
+
+        colorSet.push('rgba(' + r + ', ' + g + ', ' + b + ', 0.8)');
+    }
+
+    window.onload = function() {
+
+        CanvasJS.addColorSet("randomSet", colorSet);
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            backgroundColor: "transparent",
+            colorSet: "randomSet",
+            data: [{
+                type: "pie",
+                indexLabelFontColor: "white",
+                indexLabelFontSize: 10,
+                startAngle: 240,
+                yValueFormatString: "##0.00\" PLN\"",
+                indexLabel: "{label} {y}",
+                dataPoints: groupedExpenses
+            }]
+        });
+        chart.render();
+
+    }
+
+
+</script>
+
+{% endblock %}

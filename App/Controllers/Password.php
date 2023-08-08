@@ -12,6 +12,20 @@ use \App\Models\User;
 class Password extends \Core\Controller {
 
     /**
+     * Class constructor
+     * 
+     * @return void
+     * 
+     */
+  public function __construct($route_params) {
+
+    parent::__construct($route_params);
+
+    $_SESSION["page"] = 'Password';
+
+  }
+
+    /**
      * Show the forgotten password page
      * 
      * @return void
