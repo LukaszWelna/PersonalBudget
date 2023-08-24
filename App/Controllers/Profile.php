@@ -91,7 +91,29 @@ use \App\Flash;
             ]);
 
         }
-       
+    }
+
+    /**
+     * Delete the account
+     * 
+     * @return void
+     * 
+     */
+    public function deleteAction() {
+
+        if ($this -> user -> deleteUser($_POST)) {
+
+            Flash::addMessage('Account deleted successfully');
+
+            $this -> redirect('/');
+
+        } else {
+
+            View::renderTemplate('Profile/show.html', [
+                'user' => $this -> user
+            ]);
+
+        }
     }
 
  }

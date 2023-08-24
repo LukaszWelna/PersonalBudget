@@ -32,9 +32,16 @@
                     <div class="col-sm-4 mx-auto">
                         <a href="/profile/edit" class="w-100 btn btn-primary" role="button">Edit</a>
                     </div>
+                        <div class="col-sm-4 mx-auto mt-4">
+                            <a id="deleteButton" class="w-100 btn btn-danger" role="button">Delete account</a>
+                        </div>
+
                 </div>
             </div>
         </div>
+          <div id="dialog-confirm" title="Are You sure?">
+          </div>     
+            
     </article>
 </main>
 
@@ -42,4 +49,57 @@
 
 
 {% block footer %}
+
+<script>
+$( function() {
+    $('#dialog-confirm').dialog({
+      dialogClass: 'delete-dialog',
+      draggable: false,
+      autoOpen: false,
+      resizable: false,
+      height: 'auto',
+      width: 400,
+      modal: true,
+      show: {
+        effect: 'fade',
+        duration: 500
+      },
+      buttons: [
+        {
+          text: 'Delete',
+          class: 'custom-button custom-delete-button',
+          click: function() {
+            var frm = $('<form>');
+            frm.attr('method', 'post');
+            frm.attr('action', '/profile/delete');
+            frm.appendTo('body');
+            frm.submit();
+        }
+        },
+        {
+          text: "Cancel",
+          class: 'custom-button custom-cancel-button',
+          click: function() {
+            $(this).dialog("close");
+          }
+        }
+      ]
+    });
+  } );
+
+  $('#deleteButton').on('click', function() {
+    $('#dialog-confirm').dialog('open');
+  });
+
+  $(window).resize(function() {
+    $('#dialog-confirm').dialog('option', 'position', {
+      my: 'center', 
+      at: 'center', 
+      of: window});
+  });
+
+
+
+    </script>
+
 {% endblock %}

@@ -120,3 +120,57 @@ input[type="number"] {
 .form-select[data-bs-popper] {
     --bs-popper-placement: bottom !important;
   }
+
+  .delete-dialog .ui-dialog-titlebar-close {
+    display: none;
+  }
+
+  .custom-button {
+    border: none;
+    padding: 5px 20px;
+    border-radius: 5px;
+  } 
+
+  .custom-delete-button {
+    background-color: #dc3545;
+    transition: color .15s ease-in-out,background-color .15s 
+                ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+
+  .custom-delete-button:hover {
+    color: #fff;
+    background-color: #c82333;
+    border-color: #bd2130;
+  }
+
+  .custom-cancel-button {
+    background-color: #007bff;
+    transition: color .15s ease-in-out,background-color .15s 
+                ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+
+  .custom-cancel-button:hover {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
+
+  .ui-dialog .ui-dialog-buttonpane button {
+    outline: none;
+  }
+
+  .ui-dialog-titlebar {
+    background-color: #2B3035;
+    color: white;
+  }
+
+  .delete-dialog, .ui-widget-content {
+    background-color: #6c757d;
+    border-width: 0;
+  }
+
+  
+
+  .ui-dialog .ui-dialog-buttonpane {
+     border-width: 0 
+    }
