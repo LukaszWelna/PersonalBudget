@@ -16,7 +16,7 @@
                     {% endfor %}
                 </ul>
                 {% endif %}
-                <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" method="post" action="/profile/update"
+                <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" method="post" action="/settings/update"
                     id="formProfile">
                     <div class="form-floating" id="profileName">
                         <input type="text" class="form-control" id="floatingNameProfile" placeholder="Name" name="name"
@@ -108,6 +108,7 @@
         });
 
     });
+
 </script>
 
 {% endblock %}

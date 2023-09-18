@@ -93,9 +93,7 @@ use \App\Models\IncomeCategoryUsers;
 
         Flash::addMessage('Income added');
 
-        $this -> redirect('/income/show', [
-            'incomeCategories' => $this -> incomeCategories
-        ]);
+        $this -> redirect('/income/show');
 
       }
 

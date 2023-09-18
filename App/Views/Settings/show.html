@@ -1,0 +1,747 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+
+<main>
+  <article>
+    <div class="px-4 my-4 mx-auto">
+      <div class="col-lg-6 mx-auto mt-3">
+        {% for message in flashMessages %}
+        <div class="alert alert-{{ message.type }}">
+          {{ message.body }}
+        </div>
+        {% endfor %}
+      </div>
+      <div class="col-lg-6 mx-auto mt-3">
+        <button id="buttonShowProfile" type="button" class="btn btn-secondary col-12">Profile</button>
+      </div>
+
+      <div id="divProfile" class="col-lg-6 mx-auto mt-3 border rounded-3 bg-body-tertiary hideDiv">
+        <div class="container text-center px-5 pb-4 pt-4">
+          <div class="row row-data border rounded-3 mb-3 mx-0">
+            <div class="row mb-3">
+              <div class="col-sm-3 col-title">Name</div>
+              <div class="col-sm-9">{{ user.name }}</div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3 col-title">Email</div>
+              <div class="col-sm-9">{{ user.email }}</div>
+            </div>
+          </div>
+          <hr class="my-4">
+          <div class="col-sm-4 mx-auto">
+            <a href="/settings/edit" class="w-100 btn btn-primary" role="button">Edit</a>
+          </div>
+          <div class="col-sm-4 mx-auto mt-4">
+            <a id="deleteButton" class="w-100 btn btn-danger" role="button">Delete account</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 mx-auto mt-3">
+        <button id="buttonShowAddIncomeCategory" type="button" class="btn btn-secondary col-12">Add income
+          category</button>
+      </div>
+
+      <div id="divAddIncomeCategory" class="col-md-10 mx-auto col-lg-4 pt-3 hideDiv">
+        <form class="px-5 pb-4 pt-4 border rounded-3 bg-body-tertiary" method="post" action="/settings/addIncomeCategory" id="formAddIncomeCategory">
+          <div class="currentCategories">
+            {% if incomeCategoryUsers.addingErrors is not empty %}
+            <ul>
+                {% for error in incomeCategoryUsers.addingErrors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            Current categories:
+            <ul>
+              {% for incomeCategory in currentIncomeCategories %}
+              <li>{{ incomeCategory.name }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <div class="form-floating mt-3" id="divFormAddIncomeCategory">
+            <input type="text" class="form-control" id="addIncomeCategory" placeholder="New income category"
+              name="newIncomeCategory" value="{{ incomeCategoryUsers.newIncomeCategory }}" required>
+            <label for="addIncomeCategory">New category</label>
+          </div>
+          <hr class="my-4">
+          <button class="w-100 btn btn-lg btn-primary mb-2" type="submit">Apply</button>
+        </form>
+      </div>
+
+      <div class="col-lg-6 mx-auto mt-3">
+        <button id="buttonShowAddExpenseCategory" type="button" class="btn btn-secondary col-12">Add expense
+          category</button>
+      </div>
+
+      <div id="divAddExpenseCategory" class="col-md-10 mx-auto col-lg-4 pt-3 hideDiv">
+        <form class="px-5 pb-4 pt-4 border rounded-3 bg-body-tertiary" method="post" action="/settings/addExpenseCategory" id="formAddExpenseCategory">
+          <div class="currentCategories">
+            {% if expenseCategoryUsers.addingErrors is not empty %}
+            <ul>
+                {% for error in expenseCategoryUsers.addingErrors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            Current categories:
+            <ul>
+              {% for expenseCategory in currentExpenseCategories %}
+              <li>{{ expenseCategory.name }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <div class="form-floating mt-3" id="divFormAddExpenseCategory">
+            <input type="text" class="form-control" id="addExpenseCategory" placeholder="New expense category"
+              name="newExpenseCategory" value="{{ expenseCategoryUsers.newExpenseCategory }}" required>
+            <label for="addExpenseCategory">New category</label>
+          </div>
+          <hr class="my-4">
+          <button class="w-100 btn btn-lg btn-primary mb-2" type="submit">Apply</button>
+        </form>
+      </div>
+
+      <div class="col-lg-6 mx-auto mt-3">
+        <button id="buttonShowAddPaymentMethod" type="button" class="btn btn-secondary col-12">Add payment
+          method</button>
+      </div>
+
+      <div id="divAddPaymentMethod" class="col-md-10 mx-auto col-lg-4 pt-3 hideDiv">
+        <form class="px-5 pb-4 pt-4 border rounded-3 bg-body-tertiary" method="post" action="/settings/addPaymentMethod" id="formAddPaymentMethod">
+          <div class="currentCategories">
+            {% if paymentMethodUsers.addingErrors is not empty %}
+            <ul>
+                {% for error in paymentMethodUsers.addingErrors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            Current payment methods:
+            <ul>
+              {% for paymentMethod in currentPaymentMethods %}
+              <li>{{ paymentMethod.name }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <div class="form-floating mt-3" id="divFormAddPaymentMethod">
+            <input type="text" class="form-control" id="newPaymentMethod" placeholder="New payment method"
+              name="newPaymentMethod" value="{{ paymentMethodUsers.newPaymentMethod }}" required>
+            <label for="newPaymentMethod">New payment method</label>
+          </div>
+          <hr class="my-4">
+          <button class="w-100 btn btn-lg btn-primary mb-2" type="submit">Apply</button>
+        </form>
+      </div>
+
+      <div class="col-lg-6 mx-auto mt-3">
+        <button id="buttonShowEditIncomeCategory" type="button" class="btn btn-secondary col-12">Edit income
+          category</button>
+      </div>
+
+      <div id="divEditIncomeCategory" class="col-md-10 mx-auto col-lg-4 pt-3 hideDiv">
+        <form class="px-5 pb-4 pt-4 border rounded-3 bg-body-tertiary" method="post" action="/settings/editIncomeCategory" id="formEditIncomeCategory">
+          <div class="currentCategories">
+            {% if incomeCategoryUsers.editingErrors is not empty %}
+            <ul>
+                {% for error in incomeCategoryUsers.editingErrors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+
+          <div class="form-floating mt-3" id="divIncomeSource">
+            <select class="form-select form-select-md mt-3" id="incomeSource" aria-label="choose income source"
+                    name="incomeCategoryAssignedToUserId" required>
+                <option value="">Choose option</option>
+               {% for incomeCategory in currentIncomeCategories %}
+                <option value="{{ incomeCategory.id }}" {% if incomeCategory.id == incomeCategoryUsers.incomeCategoryAssignedToUserId %} selected {% endif %}>
+                    {{ incomeCategory.name }}</option>
+               {% endfor %}
+              </select>
+              <label for="incomeSource">Category</label>
+        </div>
+
+          <div class="form-floating mt-3" id="divFormEditIncomeCategory">
+            <input type="text" class="form-control" id="editIncomeCategory" placeholder="Edit income category"
+              name="editIncomeCategory" value="{{ incomeCategoryUsers.editIncomeCategory }}" required>
+            <label for="editIncomeCategory">Edit income category</label>
+          </div>
+          <hr class="my-4">
+          <button class="w-100 btn btn-lg btn-primary mb-2" type="submit">Apply</button>
+        </form>
+      </div>
+
+      <div class="col-lg-6 mx-auto mt-3">
+        <button id="buttonShowEditExpenseCategory" type="button" class="btn btn-secondary col-12">Edit expense
+          category</button>
+      </div>
+
+      <div id="divEditExpenseCategory" class="col-md-10 mx-auto col-lg-4 pt-3 hideDiv">
+        <form class="px-5 pb-4 pt-4 border rounded-3 bg-body-tertiary" method="post" action="/settings/editExpenseCategory" id="formEditExpenseCategory">
+          <div class="currentCategories">
+            {% if expenseCategoryUsers.editingErrors is not empty %}
+            <ul>
+                {% for error in expenseCategoryUsers.editingErrors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+
+          <div class="form-floating mt-3" id="divExpenseSource">
+            <select class="form-select form-select-md mt-3" id="expenseSource" aria-label="choose expense source"
+                    name="expenseCategoryAssignedToUserId" required>
+                <option value="">Choose option</option>
+               {% for expenseCategory in currentExpenseCategories %}
+                <option value="{{ expenseCategory.id }}" {% if expenseCategory.id == expenseCategoryUsers.expenseCategoryAssignedToUserId %} selected {% endif %}>
+                    {{ expenseCategory.name }}</option>
+               {% endfor %}
+              </select>
+              <label for="expenseSource">Category</label>
+        </div>
+
+          <div class="form-floating mt-3" id="divFormEditExpenseCategory">
+            <input type="text" class="form-control" id="editExpenseCategory" placeholder="Edit expense category"
+              name="editExpenseCategory" value="{{ expenseCategoryUsers.editExpenseCategory }}" required>
+            <label for="editExpenseCategory">Edit expense category</label>
+          </div>
+          <hr class="my-4">
+          <button class="w-100 btn btn-lg btn-primary mb-2" type="submit">Apply</button>
+        </form>
+      </div>
+
+      <div class="col-lg-6 mx-auto mt-3">
+        <button id="buttonShowEditPaymentMethod" type="button" class="btn btn-secondary col-12">Edit payment
+           method</button>
+      </div>
+
+      <div id="divEditPaymentMethod" class="col-md-10 mx-auto col-lg-4 pt-3 hideDiv">
+        <form class="px-5 pb-4 pt-4 border rounded-3 bg-body-tertiary" method="post" action="/settings/editPaymentMethod" id="formEditPaymentMethod">
+          <div class="currentCategories">
+            {% if paymentMethodUsers.editingErrors is not empty %}
+            <ul>
+                {% for error in paymentMethodUsers.editingErrors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+
+          <div class="form-floating mt-3" id="divPayment">
+            <select class="form-select form-select-md mt-3" id="selectPaymentMethod" aria-label="choose payment method"
+                    name="paymentMethodAssignedToUserId" required>
+                <option value="">Choose option</option>
+               {% for paymentMethod in currentPaymentMethods %}
+                <option value="{{ paymentMethod.id }}" {% if paymentMethod.id == paymentMethodUsers.paymentMethodAssignedToUserId %} selected {% endif %}>
+                    {{ paymentMethod.name }}</option>
+               {% endfor %}
+              </select>
+              <label for="selectPaymentMethod">Payment</label>
+        </div>
+
+          <div class="form-floating mt-3" id="divFormEditPaymentMethod">
+            <input type="text" class="form-control" id="editPaymentMethod" placeholder="Edit payment method"
+              name="editPaymentMethod" value="{{ paymentMethodUsers.editPaymentMethod }}" required>
+            <label for="editPaymentMethod">Edit payment method</label>
+          </div>
+          <hr class="my-4">
+          <button class="w-100 btn btn-lg btn-primary mb-2" type="submit">Apply</button>
+        </form>
+      </div>
+
+      <div class="col-lg-6 mx-auto mt-3">
+        <button id="buttonShowDeleteIncomeCategory" type="button" class="btn btn-secondary col-12">Delete income
+          category</button>
+      </div>
+
+      <div id="divDeleteIncomeCategory" class="col-md-10 mx-auto col-lg-4 pt-3 hideDiv">
+        <form class="px-5 pb-4 pt-4 border rounded-3 bg-body-tertiary" method="post" action="/settings/deleteIncomeCategory" id="formDeleteIncomeCategory">
+          <div class="currentCategories">
+            {% if incomeCategoryUsers.deletingErrors is not empty %}
+            <ul>
+                {% for error in incomeCategoryUsers.deletingErrors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+          <div class="form-floating mt-3" id="divDeleteIncomeSource">
+            <select class="form-select form-select-md mt-3" id="deleteIncomeSource" aria-label="choose income source"
+                    name="incomeCategoryAssignedToUserId" required>
+                <option value="">Choose option</option>
+               {% for incomeCategory in currentIncomeCategories %}
+                <option value="{{ incomeCategory.id }}" {% if incomeCategory.id == incomeCategoryUsers.incomeCategoryAssignedToUserId %} selected {% endif %}>
+                    {{ incomeCategory.name }}</option>
+               {% endfor %}
+              </select>
+              <label for="deleteIncomeSource">Category</label>
+        </div>
+        <hr class="my-4">
+        <button class="w-100 btn btn-lg btn-danger mb-2" type="submit">Delete</button>
+      </form>
+    </div>
+
+      <div class="col-lg-6 mx-auto mt-3">
+        <button id="buttonShowDeleteExpenseCategory" type="button" class="btn btn-secondary col-12">Delete expense
+          category</button>
+      </div>
+
+      <div id="divDeleteExpenseCategory" class="col-md-10 mx-auto col-lg-4 pt-3 hideDiv">
+        <form class="px-5 pb-4 pt-4 border rounded-3 bg-body-tertiary" method="post" action="/settings/deleteExpenseCategory" id="formDeleteExpenseCategory">
+          <div class="currentCategories">
+            {% if expenseCategoryUsers.deletingErrors is not empty %}
+            <ul>
+                {% for error in expenseCategoryUsers.deletingErrors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+          <div class="form-floating mt-3" id="divDeleteExpenseSource">
+            <select class="form-select form-select-md mt-3" id="deleteExpenseSource" aria-label="choose expense source"
+                    name="expenseCategoryAssignedToUserId" required>
+                <option value="">Choose option</option>
+               {% for expenseCategory in currentExpenseCategories %}
+                <option value="{{ expenseCategory.id }}" {% if expenseCategory.id == expenseCategoryUsers.expenseCategoryAssignedToUserId %} selected {% endif %}>
+                    {{ expenseCategory.name }}</option>
+               {% endfor %}
+              </select>
+              <label for="deleteExpenseSource">Category</label>
+        </div>
+        <hr class="my-4">
+        <button class="w-100 btn btn-lg btn-danger mb-2" type="submit">Delete</button>
+      </form>
+    </div>
+
+      <div class="col-lg-6 mx-auto mt-3">
+        <button id="buttonShowDeletePaymentMethod" type="button" class="btn btn-secondary col-12">Delete
+          payment method</button>
+      </div>
+
+      <div id="divDeletePaymentCategory" class="col-md-10 mx-auto col-lg-4 pt-3 hideDiv">
+        <form class="px-5 pb-4 pt-4 border rounded-3 bg-body-tertiary" method="post" action="/settings/deletePaymentMethod" id="formDeletePaymentMethod">
+          <div class="currentCategories">
+            {% if paymentMethodUsers.deletingErrors is not empty %}
+            <ul>
+                {% for error in paymentMethodUsers.deletingErrors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+          <div class="form-floating mt-3" id="divDeletePaymentMethod">
+            <select class="form-select form-select-md mt-3" id="deletePaymentMethod" aria-label="choose payment method"
+                    name="paymentMethodAssignedToUserId" required>
+                <option value="">Choose option</option>
+               {% for paymentMethod in currentPaymentMethods %}
+                <option value="{{ paymentMethod.id }}" {% if paymentMethod.id == paymentMethodUsers.paymentMethodAssignedToUserId %} selected {% endif %}>
+                    {{ paymentMethod.name }}</option>
+               {% endfor %}
+              </select>
+              <label for="deletePaymentMethod">Payment</label>
+        </div>
+        <hr class="my-4">
+        <button class="w-100 btn btn-lg btn-danger mb-2" type="submit">Delete</button>
+      </form>
+    </div>
+
+    </div>
+
+    <div id="dialog-confirm" title="Are You sure?">
+    </div>
+
+    <div id="dialogDelete" title="Are You sure?" style="display: none;">
+        <p>After deleting You will loose all data related with this option.</p>
+    </div>
+
+  </article>
+</main>
+
+{% endblock %}
+
+
+{% block footer %}
+
+<script src="/js/validateLetters.js"></script>
+
+<script>
+  $(function () {
+    $('#dialog-confirm').dialog({
+      dialogClass: 'delete-dialog',
+      draggable: false,
+      autoOpen: false,
+      resizable: false,
+      height: 'auto',
+      width: 400,
+      modal: true,
+      show: {
+        effect: 'fade',
+        duration: 500
+      },
+      buttons: [
+        {
+          text: 'Delete',
+          class: 'custom-button custom-delete-button',
+          click: function () {
+            var frm = $('<form>');
+            frm.attr('method', 'post');
+            frm.attr('action', '/settings/delete');
+            frm.appendTo('body');
+            frm.submit();
+          }
+        },
+        {
+          text: "Cancel",
+          class: 'custom-button custom-cancel-button',
+          click: function () {
+            $(this).dialog("close");
+          }
+        }
+      ]
+    });
+  });
+
+  $('#deleteButton').on('click', function () {
+    $('#dialog-confirm').dialog('open');
+  });
+
+  $(window).resize(function () {
+    $('#dialog-confirm').dialog('option', 'position', {
+      my: 'center',
+      at: 'center',
+      of: window
+    });
+  });
+
+</script>
+
+<script>
+  $(document).ready(function () {
+    $("#buttonShowProfile").click(function () {
+      $("#divProfile").toggle();
+    });
+
+    $("#buttonShowAddIncomeCategory").click(function () {
+      $("#divAddIncomeCategory").toggle();
+    });
+
+    $("#buttonShowAddExpenseCategory").click(function () {
+      $("#divAddExpenseCategory").toggle();
+    });
+
+    $("#buttonShowAddPaymentMethod").click(function () {
+      $("#divAddPaymentMethod").toggle();
+    });
+
+    $("#buttonShowEditIncomeCategory").click(function () {
+      $("#divEditIncomeCategory").toggle();
+    });
+
+    $("#buttonShowEditExpenseCategory").click(function () {
+      $("#divEditExpenseCategory").toggle();
+    });
+
+    $("#buttonShowEditPaymentMethod").click(function () {
+      $("#divEditPaymentMethod").toggle();
+    });
+
+    $("#buttonShowDeleteIncomeCategory").click(function () {
+      $("#divDeleteIncomeCategory").toggle();
+    });
+
+    $("#buttonShowDeleteExpenseCategory").click(function () {
+      $("#divDeleteExpenseCategory").toggle();
+    });
+
+    $("#buttonShowDeletePaymentMethod").click(function () {
+      $("#divDeletePaymentCategory").toggle();
+    });
+  });
+
+</script>
+
+<script>
+
+  $("#formAddIncomeCategory").validate({
+      rules: {
+          newIncomeCategory: {
+              required: true,
+              onlyLetters: true,
+              maxlength: 25,
+              remote: '/settings/validateNewIncomeCategory'
+          }
+      },
+      messages: {
+        newIncomeCategory: {
+          onlyLetters: 'Income category must contain only letters.',
+          remote: 'Name of category already exists in database.'
+              },
+          },
+      errorPlacement: function (error, element) {
+          if (element.attr("name") == "newIncomeCategory")
+              error.insertAfter('#divFormAddIncomeCategory')
+      }
+  });
+  
+</script>
+
+<script>
+
+  $("#formAddExpenseCategory").validate({
+      rules: {
+          newExpenseCategory: {
+              required: true,
+              onlyLetters: true,
+              maxlength: 25,
+              remote: '/settings/validateNewExpenseCategory'
+          }
+      },
+      messages: {
+        newExpenseCategory: {
+          onlyLetters: 'Expense category must contain only letters.',
+          remote: 'Name of category already exists in database.'
+              },
+          },
+      errorPlacement: function (error, element) {
+          if (element.attr("name") == "newExpenseCategory")
+              error.insertAfter('#divFormAddExpenseCategory')
+      }
+  });
+  
+</script>
+
+<script>
+
+  $("#formAddPaymentMethod").validate({
+      rules: {
+          newPaymentMethod: {
+              required: true,
+              onlyLetters: true,
+              maxlength: 25,
+              remote: '/settings/validateNewPaymentMethod'
+          }
+      },
+      messages: {
+        newPaymentMethod: {
+          onlyLetters: 'Payment method must contain only letters.',
+          remote: 'Name of payment method already exists in database.'
+              },
+          },
+      errorPlacement: function (error, element) {
+          if (element.attr("name") == "newPaymentMethod")
+              error.insertAfter('#divFormAddPaymentMethod')
+      }
+  });
+  
+</script>
+
+<script>
+
+  $("#formEditIncomeCategory").validate({
+      rules: {
+        editIncomeCategory: {
+              required: true,
+              onlyLetters: true,
+              maxlength: 25,
+              remote: '/settings/validateNewIncomeCategory'
+          },
+          incomeCategoryAssignedToUserId: {
+        required: true
+      }
+      },
+      messages: {
+        editIncomeCategory: {
+          onlyLetters: 'Income category must contain only letters.',
+          remote: 'Name of category already exists in database.'
+              },
+          },
+      errorPlacement: function (error, element) {
+          if (element.attr("name") == "editIncomeCategory")
+              error.insertAfter('#divFormEditIncomeCategory')
+          if (element.attr("name") == "incomeCategoryAssignedToUserId")
+              error.insertAfter('#divIncomeSource')
+      }
+  });
+  
+</script>
+
+<script>
+
+  $("#formEditExpenseCategory").validate({
+      rules: {
+        editExpenseCategory: {
+              required: true,
+              onlyLetters: true,
+              maxlength: 25,
+              remote: '/settings/validateNewExpenseCategory'
+          },
+          expenseCategoryAssignedToUserId: {
+        required: true
+      }
+      },
+      messages: {
+        editExpenseCategory: {
+          onlyLetters: 'Expense category must contain only letters.',
+          remote: 'Name of category already exists in database.'
+              },
+          },
+      errorPlacement: function (error, element) {
+          if (element.attr("name") == "editExpenseCategory")
+              error.insertAfter('#divFormEditExpenseCategory')
+          if (element.attr("name") == "expenseCategoryAssignedToUserId")
+              error.insertAfter('#divExpenseSource')
+      }
+  });
+  
+</script>
+
+<script>
+
+  $("#formEditPaymentMethod").validate({
+      rules: {
+        editPaymentMethod: {
+              required: true,
+              onlyLetters: true,
+              maxlength: 25,
+              remote: '/settings/validateNewPaymentMethod'
+          },
+          paymentMethodAssignedToUserId: {
+        required: true
+      }
+      },
+      messages: {
+        editPaymentMethod: {
+          onlyLetters: 'Payment method must contain only letters.',
+          remote: 'Name of payment already exists in database.'
+              },
+          },
+      errorPlacement: function (error, element) {
+          if (element.attr("name") == "editPaymentMethod")
+              error.insertAfter('#divFormEditPaymentMethod')
+          if (element.attr("name") == "paymentMethodAssignedToUserId")
+              error.insertAfter('#divPayment')
+      }
+  });
+  
+</script>
+
+<script>
+
+  $("#formDeleteIncomeCategory").validate({
+      rules: {
+          incomeCategoryAssignedToUserId: {
+            required: true
+      }
+      },
+      errorPlacement: function (error, element) {
+          if (element.attr("name") == "incomeCategoryAssignedToUserId")
+              error.insertAfter('#divDeleteIncomeSource')
+      }
+  });
+  
+</script>
+
+<script>
+
+  $("#formDeleteExpenseCategory").validate({
+      rules: {
+          expenseCategoryAssignedToUserId: {
+            required: true
+      }
+      },
+      errorPlacement: function (error, element) {
+          if (element.attr("name") == "expenseCategoryAssignedToUserId")
+              error.insertAfter('#divDeleteExpenseSource')
+      }
+  });
+  
+</script>
+
+<script>
+
+  $("#formDeletePaymentMethod").validate({
+      rules: {
+          paymentMethodAssignedToUserId: {
+            required: true
+      }
+      },
+      errorPlacement: function (error, element) {
+          if (element.attr("name") == "paymentMethodAssignedToUserId")
+              error.insertAfter('#divDeletePaymentMethod')
+      }
+  });
+  
+</script>
+
+<script>
+  
+  $(document).ready(function() {
+    // Initialize the dialog
+    $("#dialogDelete").dialog({
+      dialogClass: 'delete-dialog',
+      draggable: false,
+      autoOpen: false,
+      resizable: false,
+      height: "auto",
+      width: 400,
+      modal: true,
+      show: {
+        effect: 'fade',
+        duration: 500
+      },
+      buttons: [
+        {
+        text: 'Delete',
+        class: 'custom-button custom-delete-button',
+        click: function () {
+          // User clicked "Confirm," proceed with form submission
+          $(this).dialog("close");
+          // Determine which form to submit based on the clicked button
+          var formId = $(this).data("formId");
+          $("#" + formId).off("submit").submit();
+        } 
+        },
+        {
+          text: 'Cancel',
+          class: 'custom-button custom-cancel-button',
+          click: function () {
+          // User clicked "Cancel," close the dialog
+          $(this).dialog("close");
+        }
+      }
+    ]
+    });
+    
+              // Intercept form submissions for both forms
+              $("#formDeleteIncomeCategory, #formDeleteExpenseCategory, #formDeletePaymentMethod").submit(function(e) {
+                      e.preventDefault(); // Prevent the default form submission
+                      // Set the data attribute to identify the form later
+                      $("#dialogDelete").data("formId", this.id);
+
+                      var selectedVal = $('#' + this.id + ' option:selected').val();
+
+                      if (selectedVal != '') {
+                        // Open the dialog
+                        $("#dialogDelete").dialog("open");
+                      }
+              });
+  });
+ 
+  $(window).resize(function () {
+    $('#dialogDelete').dialog('option', 'position', {
+      my: 'center',
+      at: 'center',
+      of: window  
+    });
+  });
+  
+</script>
+
+{% endblock %}
