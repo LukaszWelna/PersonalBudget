@@ -151,7 +151,7 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="row row-source">
-                                {{ userExpense.name }}
+                                {{ userExpense.name }} ({{ userExpense.paymentName }})
                             </div>
                             <div class="row row-comment">
                                 {{ userExpense.expenseComment }}
@@ -226,7 +226,7 @@
 {% endblock %}
 
 {% block footer %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
 <script src="/js/validateDate.js"></script>
@@ -277,7 +277,7 @@
             startDate: {
                 min: 'Please enter a date equal or greather than 01-01-2000.'
                 },
-            dateendDateOfExpense: {
+            endDate: {
                 min: 'Please enter a date equal or greather than 01-01-2000.'
             }
             },

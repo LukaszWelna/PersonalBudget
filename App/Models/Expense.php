@@ -186,12 +186,14 @@ use PDO;
        */
       public static function getAll($loggedUserId, $dates) {
 
-        $sql = 'SELECT expenses.*, expenses_category_assigned_to_users.name 
+        $sql = 'SELECT expenses.*, expenses_category_assigned_to_users.name, payment_methods_assigned_to_users.name AS paymentName
                 FROM expenses 
                 INNER JOIN expenses_category_assigned_to_users 
-                ON expenses.expenseCategoryAssignedToUserId = expenses_category_assigned_to_users.id 
+                ON expenses.expenseCategoryAssignedToUserId = expenses_category_assigned_to_users.id
+                INNER JOIN payment_methods_assigned_to_users 
+                ON expenses.paymentMethodAssignedToUserId = payment_methods_assigned_to_users.id
                 WHERE expenses.userId = :loggedUserId 
-                AND expenses.dateOfExpense BETWEEN :startDate AND :endDate ORDER BY expenses.dateOfExpense DESC';
+                AND expenses.dateOfExpense BETWEEN :startDate AND :endDate ORDER BY expenses.dateOfExpense DESC, expenses.amount DESC';
 
         $db = static::getDB();
         $stmt = $db -> prepare($sql);

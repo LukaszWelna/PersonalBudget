@@ -105,10 +105,7 @@ use \App\Models\PaymentMethodUsers;
 
         Flash::addMessage('Expense added');
 
-        $this -> redirect('/expense/show', [
-            'expenseCategories' => $this -> expenseCategories,
-            'paymentMethods' => $this -> paymentMethods
-        ]);
+        $this -> redirect('/expense/show');
 
       }
 
