@@ -44,7 +44,7 @@ class Mail {
             $mail->Port       = 587;         
 
             $mail->setFrom('myEmailServer1024@gmail.com');
-            $mail->addAddress($to);     //Add a recipient
+            $mail->addAddress($to);
             $mail->addReplyTo('myEmailServer1024@gmail.com');
             $mail->Subject = $subject;
             $mail-> AltBody = $text;

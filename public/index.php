@@ -34,5 +34,7 @@ $router -> add('', ['controller' => 'Home', 'action' => 'index']);
 $router -> add('password/reset/{token:[\da-f]+}', ['controller' => 'Password', 'action' => 'reset']);
 $router -> add('signup/activate/{token:[\da-f]+}', ['controller' => 'Signup', 'action' => 'activate']);
 $router -> add('{controller}/{action}');
+$router -> add('api/limit/{category:[\wżźćńółęąśŻŹĆĄŚĘŁÓŃ\- ]+}', ['controller' => 'Expense', 'action' => 'limit']);
+$router -> add('api/amount/{category:[\wżźćńółęąśŻŹĆĄŚĘŁÓŃ\- ]+}/{date:[\d\-]+}', ['controller' => 'Expense', 'action' => 'amount']);
 
 $router -> dispatch($_SERVER['QUERY_STRING']);

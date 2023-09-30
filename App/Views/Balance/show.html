@@ -86,7 +86,7 @@
         <h2 class="display-6 fw-bold text-body-emphasis">Incomes</h2>
         {% if userIncomes %}
         <div class="col-lg-6 mx-auto mt-3 col-incomes border rounded-3 bg-body-tertiary">
-            <h2 class="py-2">Details</h2>
+            <h2 class="pt-2">Details</h2>
             <div class="container text-center px-5 pb-4">
                 {% for userIncome in userIncomes %}
                 <div class="row row-data border rounded-3 mt-3">
@@ -139,7 +139,7 @@
         <h2 class="display-6 fw-bold text-body-emphasis">Expenses</h2>
         {% if userExpenses %}
         <div class="col-lg-6 mx-auto mt-3 col-incomes border rounded-3 bg-body-tertiary">
-            <h2 class="py-2">Details</h2>
+            <h2 class="pt-2">Details</h2>
             <div class="container text-center px-5 pb-4">
                 {% for userExpense in userExpenses %}
                 <div class="row row-data border rounded-3 mt-3">
@@ -227,108 +227,50 @@
 
 {% block footer %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>
+
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
 <script src="/js/validateDate.js"></script>
 
-<script>
-
-    $(document).ready(function(){
-        $("#idChoosePeriod").bind("change", function () {
-            if(this.value == '')
-            $('#periodModal').modal('show')
-        }).change();
-    });
-    
-    $(document).ready(function(){
-        $('#submitForm').click(function(){
-            if ($('#idChoosePeriod option:selected').val() == '') {
-                $('#periodModal').modal('show')
-            }
-        });
-    });
-
-    $.validator.addMethod("notAnother", function(value, element) {
-        return (value != '');
-    }, "");
-
-    $("#formChoosePeriod").validate({
-        rules: {
-            choosePeriod: {
-                notAnother: true
-            }
-        }        
-    });
-
-    $("#formAnotherPeriod").validate({
-        rules: {
-            startDate: {
-                dateTime: true,
-                min: "2000-01-01",
-                dateNotGreaterThanToday: true
-            },
-            endDate: {
-                dateTime: true,
-                min: "2000-01-01",
-                dateNotGreaterThanToday: true
-            },
-        },
-        messages: {
-            startDate: {
-                min: 'Please enter a date equal or greather than 01-01-2000.'
-                },
-            endDate: {
-                min: 'Please enter a date equal or greather than 01-01-2000.'
-            }
-            },
-        errorPlacement: function (error, element) {
-            if (element.attr("name") == "startDate")
-                error.insertAfter('#divStartDate')
-            else if (element.attr("name") == "endDate")
-                error.insertAfter('#divEndDate')
-        }
-        
-    });
-</script>
+<script src="/js/balanceShow.js"></script>
 
 <script>
 
-    // Get values from twig
-    var groupedExpenses = JSON.parse('{{ groupedUserExpenses|json_encode|raw }}');
-    console.log(groupedExpenses);
+ // Get values from twig
+ var groupedExpenses = JSON.parse('{{ groupedUserExpenses|json_encode|raw }}');
+ console.log(groupedExpenses);
 
-const colorSet = [];
+ const colorSet = [];
 
-    for (i = 0; i < groupedExpenses.length; i++) {
-        const r = Math.floor(Math.random() * 255);
-        const g = Math.floor(Math.random() * 255); 
-        const b = Math.floor(Math.random() * 255);
+ for (i = 0; i < groupedExpenses.length; i++) {
+     const r = Math.floor(Math.random() * 255);
+     const g = Math.floor(Math.random() * 255); 
+     const b = Math.floor(Math.random() * 255);
 
-        colorSet.push('rgba(' + r + ', ' + g + ', ' + b + ', 0.8)');
-    }
+     colorSet.push("rgba(" + r + ", " + g + ", " + b + ", 0.8)");
+ }
 
-    window.onload = function() {
+ window.onload = function() {
 
-        CanvasJS.addColorSet("randomSet", colorSet);
+     CanvasJS.addColorSet("randomSet", colorSet);
 
-        var chart = new CanvasJS.Chart("chartContainer", {
-            animationEnabled: true,
-            backgroundColor: "transparent",
-            colorSet: "randomSet",
-            data: [{
-                type: "pie",
-                indexLabelFontColor: "white",
-                indexLabelFontSize: 10,
-                startAngle: 240,
-                yValueFormatString: "##0.00\" PLN\"",
-                indexLabel: "{label} {y}",
-                dataPoints: groupedExpenses
-            }]
-        });
-        chart.render();
+     var chart = new CanvasJS.Chart("chartContainer", {
+         animationEnabled: true,
+         backgroundColor: "transparent",
+         colorSet: "randomSet",
+         data: [{
+             type: "pie",
+             indexLabelFontColor: "white",
+             indexLabelFontSize: 10,
+             startAngle: 240,
+             yValueFormatString: "##0.00\" PLN\"",
+             indexLabel: "{label} {y}",
+             dataPoints: groupedExpenses
+         }]
+     });
+     chart.render();
 
-    }
-
+ }
 
 </script>
 

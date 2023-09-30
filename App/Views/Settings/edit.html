@@ -55,59 +55,59 @@
 
 {% block footer %}
 
-<script src="/js/app.js"></script>
+<script src="/js/validatePassword.js"></script>
 
 <script>
 
-    $(document).ready(function () {
+$(document).ready(function () {
 
-        var userId = '{{ user.id }}';
+var userId = "{{ user.id }}";
 
-        $('#formProfile').validate({
-            rules: {
-                name: 'required',
-                email: {
-                    required: true,
-                    email: true,
-                    remote: {
-                        url: '/account/validateEmail',
-                        data: {
-                            ignoreId: function () {
-                                return userId;
-                            }
-                        }
+$("#formProfile").validate({
+    rules: {
+        name: "required",
+        email: {
+            required: true,
+            email: true,
+            remote: {
+                url: "/account/validateEmail",
+                data: {
+                    ignoreId: function () {
+                        return userId;
                     }
-                },
-                password: {
-                    minlength: 6,
-                    validPassword: true
                 }
-            },
-            messages: {
-                email: {
-                    remote: 'Email already exists in database'
-                }
-            },
-            errorPlacement: function (error, element) {
-                if (element.attr("name") == "name")
-                    error.insertAfter('#profileName')
-                else if (element.attr("name") == "email")
-                    error.insertAfter('#profileEmail')
-                else if (element.attr("name") == "password")
-                    error.insertAfter('#profilePassword')
             }
-        });
+        },
+        password: {
+            minlength: 6,
+            validPassword: true
+        }
+    },
+    messages: {
+        email: {
+            remote: "Email already exists in database"
+        }
+    },
+    errorPlacement: function (error, element) {
+        if (element.attr("name") == "name")
+            error.insertAfter("#profileName")
+        else if (element.attr("name") == "email")
+            error.insertAfter("#profileEmail")
+        else if (element.attr("name") == "password")
+            error.insertAfter("#profilePassword")
+    }
+});
 
-        $('#showPassword').on('click', function () {
-            var passInput = $('#passwordProfile');
-            if (passInput.attr('type') === 'password') {
-                passInput.attr('type', 'text');
-            } else {
-                passInput.attr('type', 'password');
-            }
-        });
+$("#showPassword").on("click", function () {
+    var passInput = $("#passwordProfile");
+    if (passInput.attr("type") === "password") {
+        passInput.attr("type", "text");
+    } else {
+        passInput.attr("type", "password");
+    }
+});
 
-    });
+});
 
 </script>
 

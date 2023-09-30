@@ -271,4 +271,46 @@ use PDO;
 
       }
 
+       /**
+       * 
+       * Get total amount of expenses in given month of given category
+       * 
+       * @param int $loggedUserId Logged user id
+       * @param array $date Chosen date
+       * @param string $expenseCategoryAssignedToUserId Chosen category
+       * 
+       * @return float total amount of expenses
+       * 
+       */
+      public static function getTotalAmountOfCategoryInMonth($loggedUserId, $expenseCategoryAssignedToUserId, $date) {
+
+        $dates = Date::getGivenMonthDates($date);
+        $expenseCategoryAssignedToUserId = str_replace('-', ' ', $expenseCategoryAssignedToUserId);
+
+        $sql = 'SELECT SUM(expenses.amount) AS totalAmount
+                FROM expenses 
+                INNER JOIN expenses_category_assigned_to_users ON expenses_category_assigned_to_users.id = expenses.expenseCategoryAssignedToUserId
+                WHERE expenses.dateOfExpense BETWEEN :startDate AND :endDate
+                AND expenses_category_assigned_to_users.name = :expenseCategoryAssignedToUserId
+                AND expenses.userId = :loggedUserId';
+
+        $db = static::getDB();
+        $stmt = $db -> prepare($sql);
+        $stmt -> bindValue(':startDate', $dates['start'], PDO::PARAM_STR);
+        $stmt -> bindValue(':endDate', $dates['end'], PDO::PARAM_STR);
+        $stmt -> bindValue(':expenseCategoryAssignedToUserId', $expenseCategoryAssignedToUserId, PDO::PARAM_STR);
+        $stmt -> bindValue(':loggedUserId', $loggedUserId, PDO::PARAM_INT);
+        $stmt -> setFetchMode(PDO::FETCH_ASSOC);
+        $stmt -> execute();
+
+        $data = $stmt -> fetch();
+
+        if ($data['totalAmount']) {
+            return $data['totalAmount'];
+        } else {
+            return 0;
+        }
+
+  }
+
  }
