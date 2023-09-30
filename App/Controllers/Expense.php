@@ -43,7 +43,9 @@ use \App\Models\PaymentMethodUsers;
      * 
      * @return void
      */
-    public function __construct() {
+    public function __construct($route_params) {
+
+        parent::__construct($route_params);
 
         $_SESSION["page"] = 'Expense';
 
@@ -98,7 +100,7 @@ use \App\Models\PaymentMethodUsers;
     }
 
       /**
-      * Show successful message after adding the epense
+      * Show successful message after adding the expense
       * @return void
       */
       public function expenseAddedMessageAction() {
@@ -106,6 +108,37 @@ use \App\Models\PaymentMethodUsers;
         Flash::addMessage('Expense added');
 
         $this -> redirect('/expense/show');
+
+      }
+
+    /**
+      * Get category limit 
+      *
+      * @return void
+      */
+      public function limitAction() {
+
+        $expenseCategoryAssignedToUserId = $this -> route_params['category'];
+        
+        echo json_encode(ExpenseCategoryUsers::getCategoryLimit($this -> loggedUserId, $expenseCategoryAssignedToUserId), JSON_UNESCAPED_UNICODE);
+
+      }
+
+      public function getDatesAction() {
+        Date::getGivenMonthDates();
+      }
+
+      /**
+      * Get total amount of expenses in given month of given category
+      *
+      * @return void
+      */
+      public function amountAction() {
+
+        $expenseCategoryAssignedToUserId = $this -> route_params['category'];
+        $date = $this -> route_params['date'];
+
+        echo json_encode(ExpenseModel::getTotalAmountOfCategoryInMonth($this -> loggedUserId, $expenseCategoryAssignedToUserId, $date), JSON_UNESCAPED_UNICODE);
 
       }
 

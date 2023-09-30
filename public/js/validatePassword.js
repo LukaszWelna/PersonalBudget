@@ -5,7 +5,7 @@
  * 
  */
 
-$.validator.addMethod('validPassword',
+$.validator.addMethod("validPassword",
 function(value, element, param) {
     if (value != '') {
         if (value.match(/.*[a-z]+.*/i) == null) {
@@ -18,5 +18,5 @@ function(value, element, param) {
 
     return true;
 },
-'Must contain at least one letter and one number'
+"Must contain at least one letter and one number"
 );

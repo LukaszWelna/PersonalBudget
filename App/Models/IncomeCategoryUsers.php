@@ -112,11 +112,11 @@ use PDO;
      * 
      */
 
-     static public function checkCategoryNameExists($incomeCategories, $newCategoryName) {
+     static public function checkCategoryNameExists($incomeCategories, $newCategoryName, $incomeCategoryAssignedToUserId) {
 
         //Check if new income category is unique
         foreach ($incomeCategories as $category) {
-            if (strtoupper($newCategoryName) == strtoupper($category -> name)) {
+            if ((strtoupper($newCategoryName) == strtoupper($category -> name)) && ($incomeCategoryAssignedToUserId != $category -> id)) {
                 return true;
             }
         }
@@ -240,7 +240,7 @@ use PDO;
         
         if (($incomeCategory != 0) && ($incomeCategoriesAssignedToUser != 0)) {
             //Check if new income category is unique
-            if (static::checkCategoryNameExists($incomeCategoriesAssignedToUser, $incomeCategory) == true) {
+            if (static::checkCategoryNameExists($incomeCategoriesAssignedToUser, $incomeCategory, $incomeCategoryAssignedToUserId) == true) {
                 $errors[] = 'Income category must has unique name.';
             }
         }

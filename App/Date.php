@@ -206,4 +206,20 @@ class Date {
         
     }
 
+    /**
+     * Get given month range
+     * 
+     * @return array Given month start and end dates
+     */
+    public static function getGivenMonthDates($date) {
+
+        $dates =[];
+
+        $dates['start'] = date('Y-m-01', strtotime($date));
+        $dates['end'] = date('Y-m-t', strtotime($date));
+
+        return $dates;
+
+    }
+
  }

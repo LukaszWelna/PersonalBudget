@@ -289,11 +289,13 @@ use \App\Models\Expense as ExpenseModel;
         
         if (isset($_GET['newIncomeCategory'])) {
             $incomeCategory = $_GET['newIncomeCategory'];
+            $incomeCategoryAssignedToUserId = 0;
         } else if (isset($_GET['editIncomeCategory'])) {
             $incomeCategory = $_GET['editIncomeCategory'];
+            $incomeCategoryAssignedToUserId = $_GET['incomeCategoryAssignedToUserId'];
         } 
 
-        $isValid = ! IncomeCategoryUsers::checkCategoryNameExists($this -> incomeCategories, $incomeCategory);
+        $isValid = ! IncomeCategoryUsers::checkCategoryNameExists($this -> incomeCategories, $incomeCategory, $incomeCategoryAssignedToUserId);
 
         header('Content-Type: application/json');
 
@@ -437,11 +439,13 @@ use \App\Models\Expense as ExpenseModel;
 
         if (isset($_GET['newExpenseCategory'])) {
             $expenseCategory = $_GET['newExpenseCategory'];
+            $expenseCategoryAssignedToUserId = 0;
         } else if (isset($_GET['editExpenseCategory'])) {
             $expenseCategory = $_GET['editExpenseCategory'];
+            $expenseCategoryAssignedToUserId = $_GET['expenseCategoryAssignedToUserId'];
         }
 
-        $isValid = ! ExpenseCategoryUsers::checkCategoryNameExists($this -> expenseCategories, $expenseCategory);
+        $isValid = ! ExpenseCategoryUsers::checkCategoryNameExists($this -> expenseCategories, $expenseCategory, $expenseCategoryAssignedToUserId);
 
         header('Content-Type: application/json');
 
@@ -585,11 +589,13 @@ use \App\Models\Expense as ExpenseModel;
 
         if (isset($_GET['newPaymentMethod'])) {
             $paymentMethod = $_GET['newPaymentMethod'];
+            $paymentMethodAssignedToUserId = 0;
         } else if (isset($_GET['editPaymentMethod'])) {
             $paymentMethod = $_GET['editPaymentMethod'];
+            $paymentMethodAssignedToUserId = $_GET['paymentMethodAssignedToUserId'];
         }
 
-        $isValid = ! PaymentMethodUsers::checkPaymentMethodNameExists($this -> paymentMethods, $paymentMethod);
+        $isValid = ! PaymentMethodUsers::checkPaymentMethodNameExists($this -> paymentMethods, $paymentMethod, $paymentMethodAssignedToUserId);
 
         header('Content-Type: application/json');
 

@@ -112,11 +112,11 @@ use PDO;
      * 
      */
 
-     public static function checkPaymentMethodNameExists($paymentMethods, $newPaymentMethod) {
+     public static function checkPaymentMethodNameExists($paymentMethods, $newPaymentMethod, $paymentMethodAssignedToUserId) {
 
         //Check if new expense category is unique
         foreach ($paymentMethods as $method) {
-            if (strtoupper($newPaymentMethod) == strtoupper($method -> name)) {
+            if ((strtoupper($newPaymentMethod) == strtoupper($method -> name)) && ($paymentMethodAssignedToUserId != $method -> id)) {
                 return true;
             }
         }
@@ -241,7 +241,7 @@ use PDO;
        
         if (($paymentMethod != 0) && ($paymentMethodsAssignedToUser != 0)) {
             //Check if new payment method is unique
-            if (static::checkPaymentMethodNameExists($paymentMethodsAssignedToUser, $paymentMethod) == true) {
+            if (static::checkPaymentMethodNameExists($paymentMethodsAssignedToUser, $paymentMethod, $paymentMethodAssignedToUserId) == true) {
                 $errors[] = 'Payment method must has unique name.';
             }
         }
