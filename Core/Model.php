@@ -33,6 +33,4 @@ use App\Config;
         return $db;
     }
 
-
-
  }

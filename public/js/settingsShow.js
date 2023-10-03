@@ -1,3 +1,4 @@
+// Delete user confirm dialog
 $(function () {
     $("#dialog-confirm").dialog({
       dialogClass: "delete-dialog",
@@ -47,6 +48,7 @@ $(function () {
   });
 
   $(document).ready(function () {
+    // Toggle view of options in settings
     $("#buttonShowProfile").click(function () {
       $("#divProfile").toggle();
     });
@@ -104,6 +106,7 @@ $(function () {
 
   });
 
+  // Validate form responsible for adding income category
   $("#formAddIncomeCategory").validate({
       rules: {
           newIncomeCategory: {
@@ -125,6 +128,7 @@ $(function () {
       }
   });
 
+  // Validate form responsible for adding expense category
   $("#formAddExpenseCategory").validate({
       rules: {
           newExpenseCategory: {
@@ -146,6 +150,7 @@ $(function () {
       }
   });
 
+  // Validate form responsible for adding payment method
   $("#formAddPaymentMethod").validate({
       rules: {
           newPaymentMethod: {
@@ -167,6 +172,7 @@ $(function () {
       }
   });
 
+  // Validate form responsible for editing income category
   $("#formEditIncomeCategory").validate({
       rules: {
         editIncomeCategory: {
@@ -200,6 +206,7 @@ $(function () {
       }
   });
 
+  // Validate form responsible for editing expense category
   $("#formEditExpenseCategory").validate({
       rules: {
         editExpenseCategory: {
@@ -244,6 +251,7 @@ $(function () {
       }
   });
   
+  // Validate form responsible for editing payment method
   $("#formEditPaymentMethod").validate({
       rules: {
         editPaymentMethod: {
@@ -277,6 +285,7 @@ $(function () {
       }
   });
 
+  // Validate form responsible for deleting income category
   $("#formDeleteIncomeCategory").validate({
       rules: {
           incomeCategoryAssignedToUserId: {
@@ -289,6 +298,7 @@ $(function () {
       }
   });
 
+  // Validate form responsible for deleting expense category
   $("#formDeleteExpenseCategory").validate({
       rules: {
           expenseCategoryAssignedToUserId: {
@@ -301,6 +311,7 @@ $(function () {
       }
   });
 
+  // Validate form responsible for deleting payment method
   $("#formDeletePaymentMethod").validate({
       rules: {
           paymentMethodAssignedToUserId: {
@@ -313,6 +324,7 @@ $(function () {
       }
   });
   
+  // Delete category confirm dialog
   $(document).ready(function() {
     $("#dialogDelete").dialog({
       dialogClass: "delete-dialog",

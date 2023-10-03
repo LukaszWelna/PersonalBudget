@@ -5,7 +5,7 @@ namespace App\Models;
 use PDO;
 
 /**
- * Income model
+ * Expense model
  */
 
  class ExpenseCategoryUsers extends \Core\Model {
@@ -59,13 +59,13 @@ use PDO;
     public $expenseCategoryAssignedToUserId;
 
     /**
-     * Adding income error messages 
+     * Adding expense error messages 
      * @var array
      */
     public $addingErrors = [];
 
     /**
-     * Editing income error messages 
+     * Editing expense error messages 
      * @var array
      */
     public $editingErrors = [];
@@ -79,6 +79,7 @@ use PDO;
     /**
      * Class constructor
      * 
+     * @param integer $userId User id
      * @param array $data Initial property values
      * 
      * @return void
@@ -96,6 +97,8 @@ use PDO;
 
     /**
      * Get all categories assigned to user
+     * 
+     * @param integer $loggedUserId Logged user id
      * 
      * @return array
      * 
@@ -118,7 +121,9 @@ use PDO;
      * 
      * Check if category name already exists in database
      * 
+     * @param array $expenseCategories Categories of expense 
      * @param string $newCategoryName Category name to search for
+     * @param integer $expenseCategoryAssignedToUserId Id of expense category assigned to logged user
      * 
      * @return boolean True if a record already exists with specified category name, false otherwise
      * 
@@ -140,6 +145,8 @@ use PDO;
 
     /**
      * Save new expense category
+     * 
+     * @param array $expenseCategoriesAssignedToUser All expense categories assigned to current user
      * 
      * @return boolean True if the expense category was edited, false otherwise
      */
@@ -167,6 +174,8 @@ use PDO;
 
     /**
      * Edit expense category
+     * 
+     * @param array $expenseCategoriesAssignedToUser All expense categories assigned to current user
      * 
      * @return boolean True if the expense category was edited, false otherwise
      */
@@ -223,6 +232,10 @@ use PDO;
 
     /**
       * Validate expense category
+      *
+      * @param array $expenseCategoriesAssignedToUser All expense categories assigned to current user
+      * @param string $expenseCategory Name of new expense category
+      * @param integer $expenseCategoryAssignedToUserId Id of expense category assigned to logged user
       *
       * @return array
       */

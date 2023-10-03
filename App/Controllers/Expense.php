@@ -41,6 +41,8 @@ use \App\Models\PaymentMethodUsers;
     /**
      * Class constructor
      * 
+     * @param array $route_params Route parameters
+     * 
      * @return void
      */
     public function __construct($route_params) {
@@ -101,6 +103,7 @@ use \App\Models\PaymentMethodUsers;
 
       /**
       * Show successful message after adding the expense
+      *
       * @return void
       */
       public function expenseAddedMessageAction() {
@@ -125,7 +128,9 @@ use \App\Models\PaymentMethodUsers;
       }
 
       public function getDatesAction() {
+
         Date::getGivenMonthDates();
+        
       }
 
       /**

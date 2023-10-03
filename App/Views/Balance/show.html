@@ -238,7 +238,6 @@
 
  // Get values from twig
  var groupedExpenses = JSON.parse('{{ groupedUserExpenses|json_encode|raw }}');
- console.log(groupedExpenses);
 
  const colorSet = [];
 
@@ -250,6 +249,7 @@
      colorSet.push("rgba(" + r + ", " + g + ", " + b + ", 0.8)");
  }
 
+ // Pie chart - expenses in defined period
  window.onload = function() {
 
      CanvasJS.addColorSet("randomSet", colorSet);

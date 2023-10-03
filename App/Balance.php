@@ -6,7 +6,7 @@ use \App\Models\Income;
 use \App\Models\Expense;
 
 /**
- * Get income and expense data
+ * Balance
  */
 
 class Balance {
@@ -112,6 +112,5 @@ class Balance {
         $this -> balance = $this -> totalAmountOfUserIncomes - $this ->totalAmountOfUserExpenses;
 
     }
-
 
  }

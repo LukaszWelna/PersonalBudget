@@ -59,6 +59,7 @@ use PDO;
     /**
      * Class constructor
      * 
+     * @param integer $userId User id
      * @param array $data Initial property values
      * 
      * @return void
@@ -194,7 +195,7 @@ use PDO;
        /**
        * Get grouped incomes in defined date period
        * 
-       * @param int $loggedUserId Logged user id
+       * @param integer $loggedUserId Logged user id
        * @param array $dates Dates range
        * 
        * @return mixed Array with grouped incomes, false if not found  
@@ -225,7 +226,7 @@ use PDO;
        /**
        * Get total amount of incomes
        * 
-       * @param int $loggedUserId Logged user id
+       * @param integer $loggedUserId Logged user id
        * @param array $dates Dates range
        * 
        * @return integer total amount of incomes

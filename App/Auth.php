@@ -7,7 +7,7 @@ use \App\Models\RememberedLogin;
 
 /**
  * Authentication
- */
+*/
 
 class Auth {
 

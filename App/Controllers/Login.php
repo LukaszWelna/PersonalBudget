@@ -46,6 +46,7 @@ class Login extends \Core\Controller {
 
      /**
       * Log out a user
+      *
       * @return void
       */
       public function destroyAction() {
@@ -56,6 +57,7 @@ class Login extends \Core\Controller {
 
       /**
       * Show logout message
+      *
       * @return void
       */
       public function showLogoutMessageAction() {

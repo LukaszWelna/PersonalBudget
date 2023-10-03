@@ -39,6 +39,12 @@ class Date {
 
      }
 
+     /**
+      * Get current date
+      *
+      * @return string $date Current date in string format
+      *
+      */
     public static function getCurrentDate() {
 
         $date = new \DateTime();
@@ -79,7 +85,6 @@ class Date {
             }
 
         } else {
-
 
             $this -> dates['start'] = $this -> chosenDateOption['startDate'];
             $this -> dates['end'] = $this -> chosenDateOption['endDate'];
@@ -163,7 +168,6 @@ class Date {
 
         }
 
-
     /**
      * Get current month range
      * 
@@ -208,6 +212,8 @@ class Date {
 
     /**
      * Get given month range
+     * 
+     * @param string $date Chosen date by user
      * 
      * @return array Given month start and end dates
      */

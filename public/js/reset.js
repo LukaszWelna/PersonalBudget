@@ -1,3 +1,4 @@
+// Reset password validation and show password feature
 $(document).ready(function () {
 
     $("#formResetPassword").validate({

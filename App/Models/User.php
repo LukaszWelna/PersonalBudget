@@ -239,7 +239,7 @@ use PDO;
        * Authenticate a user by email and password
        * 
        * @param string $email Email address
-       * @param string $password password
+       * @param string $password Password
        * 
        * @return mixed User object if found, false if authentication fails
        * 
@@ -257,7 +257,7 @@ use PDO;
         return false;
       } 
 
-        /**
+      /**
        * Find a user model by id
        * 
        * @param integer $id The user id
@@ -331,7 +331,7 @@ use PDO;
       /**
        * Start the password reset process by generating a new token and expiry
        * 
-       * @return void
+       * @return boolean True if password reset token was saved successfully, false otherwise
        */
       public function startPasswordReset() {
 

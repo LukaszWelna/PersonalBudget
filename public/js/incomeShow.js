@@ -1,3 +1,4 @@
+// Validate form responsible for adding new income
 $("#formIncome").validate({
     rules: {
         amount: {
