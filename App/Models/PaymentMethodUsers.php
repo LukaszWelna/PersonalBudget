@@ -67,6 +67,7 @@ use PDO;
     /**
      * Class constructor
      * 
+     * @param integer $userId User id
      * @param array $data Initial property values
      * 
      * @return void
@@ -84,6 +85,8 @@ use PDO;
 
     /**
      * Get all methods assigned to user
+     * 
+     * @param integer $loggedUserId Logged user id
      * 
      * @return array
      * 
@@ -106,6 +109,10 @@ use PDO;
      * 
      * Check if payment method name already exists in database
      * 
+     * @param array $paymentMethods Methods of payment 
+     * @param string $newPaymentMethod New payment method
+     * @param integer $paymentMethodAssignedToUserId Id of payment method assigned to logged user
+     * 
      * @param string $newPaymentMethod Payment method name to search for
      * 
      * @return boolean True if a record already exists with specified payment method name, false otherwise
@@ -114,7 +121,7 @@ use PDO;
 
      public static function checkPaymentMethodNameExists($paymentMethods, $newPaymentMethod, $paymentMethodAssignedToUserId) {
 
-        //Check if new expense category is unique
+        //Check if new payment method is unique
         foreach ($paymentMethods as $method) {
             if ((strtoupper($newPaymentMethod) == strtoupper($method -> name)) && ($paymentMethodAssignedToUserId != $method -> id)) {
                 return true;
@@ -125,6 +132,8 @@ use PDO;
 
     /**
      * Save new payment method
+     * 
+     * @param array $paymentMethodsAssignedToUser All payment methods assigned to current user
      * 
      * @return boolean True if the payment method was saved, false otherwise
      */
@@ -152,6 +161,8 @@ use PDO;
 
     /**
      * Edit payment method
+     * 
+     * @param array $paymentMethodsAssignedToUser All payment methods assigned to current user
      * 
      * @return boolean True if the payment method was edited, false otherwise
      */
@@ -207,6 +218,10 @@ use PDO;
 
     /**
       * Validate payment method
+      *
+      * @param array $paymentMethodsAssignedToUser All payment methods assigned to current user
+      * @param string $paymentMethod Name of new payment method
+      * @param integer $paymentMethodAssignedToUserId Id of payment method assigned to logged user
       *
       * @return array
       */

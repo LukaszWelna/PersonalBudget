@@ -67,6 +67,7 @@ use PDO;
     /**
      * Class constructor
      * 
+     * @param integer $userId User id
      * @param array $data Initial property values
      * 
      * @return void
@@ -84,6 +85,8 @@ use PDO;
 
     /**
      * Get all categories assigned to user
+     * 
+     * @param integer $loggedUserId Logged user id
      * 
      * @return array
      * 
@@ -106,7 +109,9 @@ use PDO;
      * 
      * Check if category name already exists in database
      * 
+     * @param array $incomeCategories Categories of income 
      * @param string $newCategoryName Category name to search for
+     * @param integer $incomeCategoryAssignedToUserId Id of income category assigned to logged user
      * 
      * @return boolean True if a record already exists with specified category name, false otherwise
      * 
@@ -123,8 +128,10 @@ use PDO;
         return false;
      }
 
-      /**
+    /**
      * Save new income category
+     * 
+     * @param array $incomeCategoriesAssignedToUser All income categories assigned to current user
      * 
      * @return boolean True if the income category was saved, false otherwise
      */
@@ -152,6 +159,8 @@ use PDO;
 
     /**
      * Edit income category
+     * 
+     * @param array $incomeCategoriesAssignedToUser All income categories assigned to current user
      * 
      * @return boolean True if the income category was edited, false otherwise
      */
@@ -206,6 +215,10 @@ use PDO;
 
     /**
       * Validate income category
+      *
+      * @param array $incomeCategoriesAssignedToUser All income categories assigned to current user
+      * @param string $incomeCategory Name of new income category
+      * @param integer $incomeCategoryAssignedToUserId Id of income category assigned to logged user
       *
       * @return array
       */

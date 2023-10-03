@@ -1,3 +1,4 @@
+// Validate form responsible for adding new expense
 $("#formExpense").validate({
     rules: {
         amount: {
@@ -38,103 +39,116 @@ $("#formExpense").validate({
     }
 });
 
-$("#expenseSource, #expenseDate").on("change", async function() {
-    await showCategoryLimit();
-    await showMoneySpent();
-    showCashLeft();
+// Show category limits, spent money and calculate left money using AJAX 
+const amountField = document.querySelector("#expenseAmount");
+const dateField = document.querySelector("#expenseDate");
+const categoryField = document.querySelector("#expenseSource");
+
+const limitInfoField = document.querySelector("#limitInfo");
+const moneySpentField = document.querySelector("#moneySpent");
+const moneyLeftField = document.querySelector("#moneyLeft");
+
+[categoryField, dateField].forEach(function(element) {
+    element.addEventListener("change", async function() {
+        await showCategoryLimit();
+        await showMoneySpent();
+        showCashLeft();
+     });
 });
 
-$(window).on("load", function() {
+window.addEventListener("load", () => {
     showCategoryLimit();
     showMoneySpent();
 });
 
+amountField.addEventListener("input", () => {
+    showCashLeft();
+});
+
+// Show category limit in proper field
 const showCategoryLimit = async () => {
-    let category = ($.trim($("#expenseSource option:selected").text()));
+    let category = categoryField.options[categoryField.selectedIndex].text.trim();
     if (category === "Choose option") {
-        $("#limitInfo").text("Category required");
+        limitInfoField.textContent = "Category required";
     } else {
         let categoryDashed = category.replace(/\s+/g, "-");
         let limitAmount = await getCategoryLimit(categoryDashed);
         if (limitAmount === null) { 
-            $("#limitInfo").text("No limit set");
+            limitInfoField.textContent = "No limit set";
         } else {
-            $("#limitInfo").text(`${limitAmount} PLN`);
+            limitInfoField.textContent = `${limitAmount} PLN`;
         }
     }
 }
 
+// Get chosen category monthly limit
 const getCategoryLimit = async (category) => {
     try {
         const res = await fetch(`../api/limit/${category}`);
-        const amount = await res.json();
-        return amount;
+        return await res.json();;
     } catch (e) {
         console.log('ERROR', e);
     }
 
 }
 
+// Show spent money in proper field
 const showMoneySpent = async () => {
-    let category = ($.trim($("#expenseSource option:selected").text()));
-    let date = $("#expenseDate").val();
+    let category = categoryField.options[categoryField.selectedIndex].text.trim();
+    let date = dateField.value;
     if ((category === "Choose option") || (date === '')) {
-        $("#moneySpent").text("Category & date required");
+        moneySpentField.textContent = "Category & date required";
     } else {
         let categoryDashed = category.replace(/\s+/g, "-");
         let moneySpentAmount = await getMoneySpent(categoryDashed, date);
-        $("#moneySpent").text(`${moneySpentAmount} PLN`);
+        moneySpentField.textContent = `${moneySpentAmount} PLN`;
     }
 }
 
+// Get spent money in month in chosen category
 const getMoneySpent = async (category, date) => {
     try {
         const res = await fetch(`../api/amount/${category}/${date}`);
-        const amount = await res.json();
-        return amount;
+        return await res.json();;
     } catch (e) {
         console.log('ERROR', e);
     }
 
 }
-
-$("#expenseAmount").on("input", function() {
-    showCashLeft();
-});
-
+// Show cash left in proper field
 const showCashLeft = () => {
-    if ($("#moneyLeft").hasClass("moneyLeftPlus")) {
-        $("#moneyLeft").removeClass("moneyLeftPlus")
+    if (moneyLeftField.classList.contains("moneyLeftPlus")) {
+        moneyLeftField.classList.remove("moneyLeftPlus")
     }
-    if ($("#moneyLeft").hasClass("moneyLeftMinus")) {
-        $("#moneyLeft").removeClass("moneyLeftMinus")
+    if (moneyLeftField.classList.contains("moneyLeftMinus")) {
+        moneyLeftField.classList.remove("moneyLeftMinus")
     }
 
-    let category = ($.trim($("#expenseSource option:selected").text()));
-    let date = $("#expenseDate").val();
-    let amount = $("#expenseAmount").val();
+    let category = categoryField.options[categoryField.selectedIndex].text.trim();
+    let date = dateField.value;
+    let amount = amountField.value;
 
     if ((category === "Choose option") || (date === '') || (amount === '')) {
-        $("#moneyLeft").text("Category, date & amount required");
+        moneyLeft.textContent = "Category, date & amount required";
     } else {
-        let limitInfo = $("#limitInfo").text();
-        let moneySpent = $("#moneySpent").text();
+        let limitInfo = limitInfoField.textContent;
+        let moneySpent = moneySpentField.textContent;
         limitInfo = limitInfo.replace(/[^0-9\.]/g, '');
         moneySpent = moneySpent.replace(/[^0-9\.]/g, '');  
 
         if ((limitInfo === '')) {
-            $("#moneyLeft").text("No limit");
+            moneyLeftField.textContent = "No limit";
         } else {
             limitInfo = Number(limitInfo);
             moneySpent = Number(moneySpent);
-            amount = $("#expenseAmount").val();
+            amount = amountField.value;
             cashLeft = limitInfo - moneySpent - amount;
             if (cashLeft >=0) {
-                $("#moneyLeft").addClass("moneyLeftPlus");
+                moneyLeftField.classList.add("moneyLeftPlus");
             } else {
-                $("#moneyLeft").addClass("moneyLeftMinus");
+                moneyLeftField.classList.add("moneyLeftMinus");
             }
-            $("#moneyLeft").text(`${cashLeft.toFixed(2)} PLN`);
+            moneyLeftField.textContent = `${cashLeft.toFixed(2)} PLN`;
         }
     }
 }

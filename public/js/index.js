@@ -1,3 +1,4 @@
+// Sign up validation and show password feature
 $(document).ready(function () {
 
     $("#formSignup").validate({

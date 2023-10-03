@@ -87,6 +87,7 @@ use \App\Models\IncomeCategoryUsers;
 
       /**
       * Show successful message after adding the income
+      *
       * @return void
       */
       public function incomeAddedMessageAction() {
@@ -96,8 +97,6 @@ use \App\Models\IncomeCategoryUsers;
         $this -> redirect('/income/show');
 
       }
-
-
 
  }
 

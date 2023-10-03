@@ -6,6 +6,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-l
 RewriteRule ^(.*)$ index.php?$1 [L,QSA]
 
+# Rules for live server
 # RewriteEngine On 
 # RewriteCond %{HTTPS} !on
 # RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

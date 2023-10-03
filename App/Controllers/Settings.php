@@ -18,7 +18,8 @@ use \App\Models\Expense as ExpenseModel;
  class Settings extends Authenticated {
 
     /**
-     * @var user User object returned from Auth class
+     * User object returned from Auth class
+     * @var user 
      * 
      */
     public $user;
@@ -288,11 +289,15 @@ use \App\Models\Expense as ExpenseModel;
     public function validateNewIncomeCategoryAction() {
         
         if (isset($_GET['newIncomeCategory'])) {
+
             $incomeCategory = $_GET['newIncomeCategory'];
             $incomeCategoryAssignedToUserId = 0;
+
         } else if (isset($_GET['editIncomeCategory'])) {
+
             $incomeCategory = $_GET['editIncomeCategory'];
             $incomeCategoryAssignedToUserId = $_GET['incomeCategoryAssignedToUserId'];
+
         } 
 
         $isValid = ! IncomeCategoryUsers::checkCategoryNameExists($this -> incomeCategories, $incomeCategory, $incomeCategoryAssignedToUserId);
@@ -438,11 +443,15 @@ use \App\Models\Expense as ExpenseModel;
     public function validateNewExpenseCategoryAction() {
 
         if (isset($_GET['newExpenseCategory'])) {
+
             $expenseCategory = $_GET['newExpenseCategory'];
             $expenseCategoryAssignedToUserId = 0;
+
         } else if (isset($_GET['editExpenseCategory'])) {
+
             $expenseCategory = $_GET['editExpenseCategory'];
             $expenseCategoryAssignedToUserId = $_GET['expenseCategoryAssignedToUserId'];
+
         }
 
         $isValid = ! ExpenseCategoryUsers::checkCategoryNameExists($this -> expenseCategories, $expenseCategory, $expenseCategoryAssignedToUserId);
@@ -588,11 +597,15 @@ use \App\Models\Expense as ExpenseModel;
     public function validateNewPaymentMethodAction() {
 
         if (isset($_GET['newPaymentMethod'])) {
+
             $paymentMethod = $_GET['newPaymentMethod'];
             $paymentMethodAssignedToUserId = 0;
+
         } else if (isset($_GET['editPaymentMethod'])) {
+
             $paymentMethod = $_GET['editPaymentMethod'];
             $paymentMethodAssignedToUserId = $_GET['paymentMethodAssignedToUserId'];
+            
         }
 
         $isValid = ! PaymentMethodUsers::checkPaymentMethodNameExists($this -> paymentMethods, $paymentMethod, $paymentMethodAssignedToUserId);

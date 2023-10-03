@@ -65,6 +65,7 @@ use PDO;
     /**
      * Class constructor
      * 
+     * @param integer $userId User id
      * @param array $data Initial property values
      * 
      * @return void
@@ -179,7 +180,7 @@ use PDO;
         /**
        * Get all expenses in defined date period
        * 
-       * @param int $loggedUserId Logged user id
+       * @param integer $loggedUserId Logged user id
        * @param array $dates Dates range
        * 
        * @return mixed Array with all expenses, false if not found 
@@ -210,7 +211,7 @@ use PDO;
        /**
        * Get grouped expenses in defined date period
        * 
-       * @param int $loggedUserId Logged user id
+       * @param integer $loggedUserId Logged user id
        * @param array $dates Dates range
        * 
        * @return mixed Array with grouped expenses, false if not found  
@@ -241,7 +242,7 @@ use PDO;
        /**
        * Get total amount of expenses
        * 
-       * @param int $loggedUserId Logged user id
+       * @param integer $loggedUserId Logged user id
        * @param array $dates Dates range
        * 
        * @return integer total amount of expenses
@@ -275,9 +276,9 @@ use PDO;
        * 
        * Get total amount of expenses in given month of given category
        * 
-       * @param int $loggedUserId Logged user id
-       * @param array $date Chosen date
+       * @param integer $loggedUserId Logged user id
        * @param string $expenseCategoryAssignedToUserId Chosen category
+       * @param array $date Chosen date
        * 
        * @return float total amount of expenses
        * 

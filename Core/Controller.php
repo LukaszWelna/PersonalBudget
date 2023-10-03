@@ -70,7 +70,6 @@ use \App\Flash;
      protected function after() {
         
      }
-
      
      /**
       * Redirect to a different page

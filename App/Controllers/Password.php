@@ -14,6 +14,8 @@ class Password extends \Core\Controller {
     /**
      * Class constructor
      * 
+     * @param array $route_params Route parameters
+     * 
      * @return void
      * 
      */
